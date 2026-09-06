@@ -4,6 +4,14 @@
 
 v1.6.0 · 2026-09-06 · 单文件离线工具 + 独立创作 Skill。
 
+## 始终下载最新版
+
+`main` 是唯一发布入口。每次版本更新都会覆盖同名文件，因此以下链接始终指向仓库最新版本：
+
+- [直接打开/下载最新版 HTML](https://raw.githubusercontent.com/chuanxituzhu-lab/sayelf-food-video/main/sayelf-food-video.html)
+- [下载最新版商品 ZIP](https://raw.githubusercontent.com/chuanxituzhu-lab/sayelf-food-video/main/sayelf-food-video.zip)
+- [下载最新版仓库 ZIP](https://github.com/chuanxituzhu-lab/sayelf-food-video/archive/refs/heads/main.zip)
+
 ## 开始使用
 
 1. 解压 ZIP，双击 `sayelf-food-video.html`，用桌面浏览器打开。
