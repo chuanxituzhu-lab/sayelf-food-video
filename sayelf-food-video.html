@@ -24,10 +24,28 @@
 .shot-prompt-body{padding-top:8px}
 .shot-prompt-text{width:100%;min-height:170px;background:#f7f8f2;font-size:12px;line-height:1.7}
 .shot-copy{margin-top:7px}
+:root{--paper:#f4f1e8;--card:#fffdf7;--ink:#18382f;--muted:#64736b;--line:#d6ddd2;--accent:#d65d32;--soft:#edf0df;--green:#246047;--radius:18px}
+body{background:radial-gradient(circle at 8% 0%,rgba(215,157,100,.13),transparent 28rem),linear-gradient(180deg,#f8f5ee 0%,#f2eee5 100%);letter-spacing:.005em}
+header{position:sticky;top:0;z-index:10;background:rgba(248,245,238,.9);backdrop-filter:blur(14px);box-shadow:0 1px 0 rgba(24,56,47,.05)}
+.logo{letter-spacing:-1.7px}.header-note{border:1px solid var(--line);background:rgba(255,253,247,.76);border-radius:999px;padding:7px 11px;letter-spacing:.08em}
+main{padding-top:42px}.intro{margin-bottom:31px}.eyebrow{display:inline-flex;align-items:center;gap:7px;background:#f9e8da;border-radius:999px;padding:5px 10px;letter-spacing:.11em}.eyebrow::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px rgba(214,93,50,.12)}
+h1{font-weight:750;letter-spacing:-1.6px}.sub{font-size:14px;color:#5d6c65}.formula{padding:7px 9px;border:1px solid var(--line);border-radius:999px;background:rgba(255,253,247,.7);box-shadow:0 6px 20px rgba(25,55,45,.04)}.formula b{padding:7px 11px}
+.examples{gap:11px;margin-bottom:30px}.example{background:rgba(255,253,247,.56);border-color:#d6ddd2;box-shadow:0 5px 16px rgba(25,55,45,.025);transition:transform .18s ease,box-shadow .18s ease,background .18s ease,border-color .18s ease}.example:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(25,55,45,.08)}.example.active{box-shadow:0 10px 24px rgba(36,96,71,.12);border-color:var(--green)}
+.panel{box-shadow:0 14px 34px rgba(25,55,45,.06);border-color:#d6ddd2}.panel-head{background:rgba(255,253,247,.72)}.panel-head h2{letter-spacing:-.3px}.simple-note{border-bottom:1px solid rgba(214,221,210,.8);background:linear-gradient(90deg,#edf0df,#f4f4e8)}.quick-fields{background:rgba(244,244,232,.44);padding:15px 24px 1px;margin:0 -24px 20px}.professional-settings{background:rgba(255,253,247,.55);transition:background .18s ease,box-shadow .18s ease}.professional-settings[open]{box-shadow:inset 0 0 0 1px rgba(36,96,71,.09),0 8px 18px rgba(25,55,45,.04)}
+input[type=text],input[type=number],textarea,select{border-color:#cbd6ca;box-shadow:0 2px 0 rgba(25,55,45,.025);transition:border-color .18s ease,box-shadow .18s ease,background .18s ease}input[type=text]:hover,input[type=number]:hover,textarea:hover,select:hover{border-color:#9db5a2;background:#fffefa}input:focus,select:focus,textarea:focus{box-shadow:0 0 0 3px rgba(36,96,71,.12);border-color:var(--green)}.quick-fields input[name=quickDishCustom],input[name=customDish]{border-style:dashed;background:#fffef9}
+.primary{background:linear-gradient(135deg,#2d6b4e 0%,#1e513d 100%);box-shadow:0 9px 18px rgba(31,81,61,.22);transition:transform .18s ease,box-shadow .18s ease,background .18s ease}.primary:hover{background:linear-gradient(135deg,#347857 0%,#1c4a38 100%);box-shadow:0 12px 24px rgba(31,81,61,.28);transform:translateY(-1px)}.secondary{background:rgba(255,253,247,.68);transition:transform .18s ease,background .18s ease,border-color .18s ease}.secondary:hover{transform:translateY(-1px);border-color:#9db5a2}
+.result-panel{box-shadow:0 18px 42px rgba(20,50,40,.1)}.result-top{background:radial-gradient(circle at 92% 8%,rgba(94,151,111,.27),transparent 19rem),linear-gradient(135deg,#173a30 0%,#213e34 55%,#1a332b 100%)}.result-top h2{letter-spacing:-.35px}.result-top .badge{border:1px solid rgba(220,240,220,.13)}.metrics{gap:31px}.metric b{font-weight:650;letter-spacing:-.5px}.metric span{letter-spacing:.02em}
+.tabs{gap:4px;padding:4px;border:1px solid var(--line);border-radius:11px;background:#f1f2e9;margin:20px 0 18px}.tab{border:0;border-radius:8px;padding:8px 12px;transition:background .16s ease,color .16s ease}.tab[aria-selected=true]{background:#fffdf7;box-shadow:0 3px 8px rgba(25,55,45,.08);border:0;color:var(--green)}
+.shot{background:linear-gradient(135deg,rgba(255,253,247,.96),rgba(249,249,239,.9));border-color:#d9e0d5;border-left:3px solid #c8d8c9;box-shadow:0 4px 12px rgba(25,55,45,.035);transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}.shot:hover{transform:translateY(-1px);border-left-color:var(--accent);box-shadow:0 9px 18px rgba(25,55,45,.08)}.shot h3{letter-spacing:-.1px}.shot .meta{color:#68766d}.time{font-variant-numeric:tabular-nums}.shot-prompt{border-top-color:#c9d6c8;background:rgba(237,240,223,.34);border-radius:9px;padding:9px 10px 10px}.shot-prompt summary{padding:1px 0}.shot-prompt-text{border-color:#d3ddd0;background:#fbfcf5}.shot-copy{background:#fffdf7}
+.notice{box-shadow:0 4px 12px rgba(142,92,41,.05)}.foot{border-top:1px solid rgba(214,221,210,.8);margin-top:12px}
+@media(min-width:1151px){.workspace>.panel:first-child{position:sticky;top:88px;max-height:calc(100vh - 106px);overflow:auto}}
+@media(max-width:850px){header{position:relative;backdrop-filter:none}.header-note{font-size:9px;padding:6px 8px}main{padding-top:27px}.quick-fields{margin-left:-20px;margin-right:-20px;padding-left:20px;padding-right:20px}.metrics{gap:18px;flex-wrap:wrap}.metric b{font-size:20px}.result-top,.output-body{padding-left:20px;padding-right:20px}.tabs{overflow-x:auto}.tab{white-space:nowrap}.shot{grid-template-columns:61px 1fr}}
+@media(max-width:520px){.examples{grid-template-columns:repeat(2,1fr);gap:8px}.example{padding:12px}.example strong{font-size:14px}.example small{font-size:10px}.intro{display:block}.formula{margin-top:16px;display:inline-flex}.row{grid-template-columns:1fr}.quick-fields .row{grid-template-columns:1fr 1fr;gap:9px}.header-note{letter-spacing:.03em}.logo{font-size:26px}}
+@media(prefers-reduced-motion:reduce){.example,.primary,.secondary,.shot{transition:none!important;transform:none!important}}
 </style>
 </head>
 <body>
-<header><div class="logo">sayelf<span>.</span></div><div class="header-note">FOOD STORIES / 离线创作工具 · 1.5</div></header>
+<header><div class="logo">sayelf<span>.</span></div><div class="header-note">FOOD STORIES / 离线创作工具 · 1.6</div></header>
 <main>
 <section class="intro"><div><p class="eyebrow">从烟火气，到有故事的镜头</p><h1>美食短视频生成器</h1><p class="sub">把一道菜，写成能拍的分镜。生成图片与视频提示词，保留食欲，也保留真实。</p></div><div class="formula"><b>主体</b>＋<b>动态</b>＋<b>镜头</b>＋<b>风格</b></div></section>
 <nav class="examples" id="examples" aria-label="一键载入示范"></nav>
@@ -73,10 +91,10 @@
 <noscript>此工具需要浏览器启用 JavaScript。无需连接网络。</noscript>
 <div class="toast" id="toast" role="status" hidden></div>
 <script>
-/* sayelf-food-video 1.5.0 — independent deterministic core; no DOM or IO. */
+/* sayelf-food-video 1.6.0 — independent deterministic core; no DOM or IO. */
 (function(root){
 'use strict';
-const VERSION='1.5.0';
+const VERSION='1.6.0';
 const DISHES={
  '油泼面':{detail:'宽面褶皱、辣椒碎与葱花清晰，红油薄亮不过曝',prep:'把煮好的宽面装碗，铺上辣子与葱花',peak:'热油准确泼在辣子上，油泡短促翻起，蒸汽自然上升',serve:'筷子挑起挂着红油的宽面，缓慢回落',sound:'热油接触辣子的短促滋啦声',color:'暖红、麦黄与厨房自然光',vessel:'粗陶大碗',stages:[['选材','面粉、辣椒面、葱花与当日鲜肉臊，摆在操作台'],['处理','和面、醒面、拉成宽面，记录面片厚薄'],['烹制','宽面入沸水，捞出沥水，铺辣子与葱花'],['盛盘','粗陶大碗承接热油，挑面展示挂汁']]},
  '火锅':{detail:'红汤油滴、花椒和食材纤维清晰，锅沿干净',prep:'将备好的食材摆到锅旁，筷子夹起一片食材',peak:'食材下入沸腾红汤，气泡破开并带起蒸汽',serve:'捞起熟透的食材，汤汁沿边缘滴落',sound:'汤底咕嘟声与食材入锅声',color:'暖红汤色与柔和侧逆光',vessel:'分格铜锅',stages:[['选材','毛肚、鸭肠、蔬菜和红汤底料分区摆好'],['处理','食材清洗切配，特写毛肚纹理与蘸料碟'],['烹制','红汤烧开，食材分次下锅并记录熟度'],['盛盘','从锅中捞出装入小碟，汤汁自然回落']]},
