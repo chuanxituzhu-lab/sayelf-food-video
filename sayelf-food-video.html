@@ -104,10 +104,10 @@ main{max-width:none;margin:0;padding:0 12px 18px}.intro{display:block;margin:0 -
 <noscript>此工具需要浏览器启用 JavaScript。无需连接网络。</noscript>
 <div class="toast" id="toast" role="status" hidden></div>
 <script>
-/* sayelf-food-video 1.7.5 — independent deterministic core; no DOM or IO. */
+/* sayelf-food-video 1.7.6 — independent deterministic core; no DOM or IO. */
 (function(root){
 'use strict';
-const VERSION='1.7.5';
+const VERSION='1.7.6';
 const DISHES={
  '油泼面':{detail:'宽面褶皱、辣椒碎与葱花清晰，红油薄亮不过曝',prep:'把煮好的宽面装碗，铺上辣子与葱花',peak:'热油准确泼在辣子上，油泡短促翻起，蒸汽自然上升',serve:'筷子挑起挂着红油的宽面，缓慢回落',sound:'热油接触辣子的短促滋啦声',color:'暖红、麦黄与厨房自然光',vessel:'粗陶大碗',stages:[['选材','面粉、辣椒面、葱花与当日鲜肉臊，摆在操作台'],['处理','和面、醒面、拉成宽面，记录面片厚薄'],['烹制','宽面入沸水，捞出沥水，铺辣子与葱花'],['盛盘','粗陶大碗承接热油，挑面展示挂汁']]},
  '火锅':{detail:'红汤油滴、花椒和食材纤维清晰，锅沿干净',prep:'将备好的食材摆到锅旁，筷子夹起一片食材',peak:'食材下入沸腾红汤，气泡破开并带起蒸汽',serve:'捞起熟透的食材，汤汁沿边缘滴落',sound:'汤底咕嘟声与食材入锅声',color:'暖红汤色与柔和侧逆光',vessel:'分格铜锅',stages:[['选材','毛肚、鸭肠、蔬菜和红汤底料分区摆好'],['处理','食材清洗切配，特写毛肚纹理与蘸料碟'],['烹制','红汤烧开，食材分次下锅并记录熟度'],['盛盘','从锅中捞出装入小碟，汤汁自然回落']]},
@@ -206,10 +206,31 @@ function validate(x){
  if(x.quote.length>24) errors.push('现场原话限 24 字；长对白请在剪辑阶段拆分。');
  return errors;
 }
-function timing(duration,count){
- const end=Math.round(duration*10),n=Math.max(1,Math.min(Math.round(count||1),end)),base=Math.floor(end/n),remainder=end%n,times=[];let cursor=0;
- for(let i=0;i<n;i++){const next=cursor+base+(i<remainder?1:0);times.push({start:cursor/10,end:next/10});cursor=next;}
- return times;
+const CINEMA_RHYTHMS={
+ event:{weight:1.08,label:'建立镜头 · 电影化留白',speed:'1.0×自然速度',technique:'24fps 稳定建立镜头，先交代空间再进入动作'},
+ flaw:{weight:0.96,label:'观察节奏 · 细节停顿',speed:'0.9×轻微放慢',technique:'中近景停留半拍，利用浅景深把注意力落到细节'},
+ stakes:{weight:0.98,label:'叙事推进 · 紧凑衔接',speed:'1.05×略快',technique:'动作未完切入局部，使用匹配剪辑推进因果'},
+ conflict:{weight:1.02,label:'冲突节奏 · 短促对切',speed:'1.1×轻快',technique:'正反打与手部特写交替，保持屏幕方向不跳轴'},
+ emotion:{weight:1.02,label:'情绪停顿 · 呼吸镜头',speed:'0.9×轻微放慢',technique:'反应近景留出呼吸，避免表演化夸张'},
+ decision:{weight:1.08,label:'决断落点 · 动作完成',speed:'1.0×自然速度',technique:'跟拍动作到落点，再用短暂停顿确认决定'},
+ turn:{weight:1.08,label:'反转承接 · 责任动作',speed:'0.95×略慢',technique:'器物匹配接手部动作，用连续动作完成反转'},
+ sense:{weight:1.28,label:'感官高潮 · 特殊镜头',speed:'0.75×慢动作建议',technique:'高帧率捕捉热油、蒸汽或脆响瞬间，短暂慢下来突出质感'},
+ reward:{weight:1.22,label:'成品奖励 · 英雄镜头',speed:'0.85×慢动作建议',technique:'低机位或环绕成品，保留挂汁、蒸汽与器皿关系'},
+ next:{weight:0.88,label:'收尾留问 · 轻快退出',speed:'1.1×轻快收尾',technique:'视线匹配后轻拉远，留下下一集可拍线索'},
+ select:{weight:1.02,label:'选材观察 · 稳定起势',speed:'1.0×自然速度',technique:'俯拍或侧前方静稳取材，先建立食材秩序'},
+ prep:{weight:0.98,label:'处理节奏 · 动作连续',speed:'1.0×自然速度',technique:'刀工与手部动作使用动作匹配，保持器物位置一致'},
+ cook:{weight:1.16,label:'火候高潮 · 动态推进',speed:'0.9×动作放大',technique:'侧面跟拍锅边运动，必要时用高帧率放大热油与蒸汽'},
+ plate:{weight:1.18,label:'盛盘完成 · 稳定收束',speed:'0.85×慢动作建议',technique:'器物匹配接住出锅动作，最后给成品一个稳定定格'}
+};
+function rhythmFor(key){return CINEMA_RHYTHMS[key]||{weight:1,label:'标准电影节奏',speed:'1.0×自然速度',technique:'动作连续、轴线稳定、切换服务于食材制作'};}
+function timing(duration,keys){
+ const sequence=Array.isArray(keys)?keys:Array.from({length:Math.max(1,Math.round(keys||1))},()=>''),end=Math.round(duration*10),n=Math.max(1,Math.min(sequence.length,end)),remaining=end-n;
+ const weights=sequence.slice(0,n).map(key=>rhythmFor(key).weight),sum=weights.reduce((a,b)=>a+b,0)||n;
+ const raw=weights.map(weight=>remaining*weight/sum),units=raw.map(value=>1+Math.floor(value));
+ let left=end-units.reduce((a,b)=>a+b,0);
+ const order=raw.map((value,index)=>({index,fraction:value-Math.floor(value)})).sort((a,b)=>b.fraction-a.fraction||a.index-b.index);
+ for(let i=0;left>0;i++,left--) units[order[i%order.length].index]++;
+ let cursor=0;return units.map(unit=>{const start=cursor;cursor+=unit;return {start:start/10,end:cursor/10};});
 }
 function compile(raw){
  const input=normalize(raw),errors=validate(input);
@@ -237,7 +258,7 @@ function compile(raw){
   keys.push('decision','sense','reward','next');
  } else keys=x.story==='无故事'?['select','prep','cook','plate']:['select','prep','cook','plate'];
  if(x.curve==='先馋后叙'&&!full) keys=['sense',...keys.filter(k=>k!=='sense')];
- const times=timing(x.duration,keys.length);
+ const times=timing(x.duration,keys);
  if(times.some(t=>t.end-t.start<0.8)) warnings.push('故事节点已优先保留；当前时长较短，部分分镜节奏低于 0.8 秒，建议延长视频或在剪辑阶段合并相邻镜头。');
  const evidenceKey={event:'event',flaw:'flaw',stakes:'stakes',conflict:'conflictEvidence',emotion:'emotion',decision:'decision',turn:'turn',next:'next'};
  const fallbacks={
@@ -291,14 +312,15 @@ function compile(raw){
   const action=(allowed?x[evidenceKey[key]]:fallbacks[key])+(foodStage?'；食物线 '+foodStage:'');
   const evidence=allowed?'用户陈述·已声明素材可用':'拍摄建议·待核实';
   const emotion=emotionMap[x.curve][Math.min(4,Math.floor(i*5/times.length))];
+  const rhythm=rhythmFor(key);
   const dialogue=Boolean(x.dialogue&&verified&&x.quote&&key==='decision'&&time.end-time.start>=x.quote.length/4&&(!i||keys[Math.min(keys.length-1,Math.floor((i-1)*keys.length/times.length))]!==key))?x.quote:'';
   const previousKey=i?keys[Math.min(keys.length-1,Math.floor((i-1)*keys.length/times.length))]:'';
-  return {...time,id:'S'+String(i+1).padStart(2,'0'),beat:key,label:labels[key],action,evidence,camera:cameraForShot(i,key),transition:transitionForShot(i,key,previousKey),emotion,
+  return {...time,id:'S'+String(i+1).padStart(2,'0'),beat:key,label:labels[key],action,evidence,camera:cameraForShot(i,key),transition:transitionForShot(i,key,previousKey),emotion,rhythm:rhythm.label,speed:rhythm.speed,technique:rhythm.technique,
    sound:x.asmr?(key==='sense'?d.sound+'；突出瞬态但不削波':key==='reward'?'轻微餐具声，保留环境底噪':'现场操作声，避免夸张音效'):'自然环境声，不强化 ASMR',dialogue,
    detail:d.detail,foodStage,vessel:d.vessel||'与菜品匹配的器皿',scene:sceneRoute,phase:i&&keys[Math.floor((i-1)*keys.length/times.length)]===key?'延续上一镜动作，改看手部或食材局部，勿重复表演':'一个明确动作，避免同镜塞入多次转场'};
  });
  if(x.dialogue&&x.quote&&verified&&!shots.some(s=>s.dialogue)) warnings.push('原话未能在当前决断镜头内自然说完，未强塞台词；请延长镜头或缩短原话。');
- const continuity='同一主体、同一人物外观与服装、同一器物（'+(d.vessel||'与菜品匹配的器皿')+'）、同一场景状态；保持食材从选材→处理→烹制→盛盘的前后因果。每镜切换不同角度、方向与运镜，分别突出制作节点，不重复同一运镜；相邻镜头使用动作匹配、视线匹配、器物匹配或声音桥，保持屏幕方向与空间轴线。场景路线：'+sceneRoute+'。'+SCENES[x.sceneMode]+'转换时用动作或器物承接，不无理由换脸、换盘或跳变菜品。';
+  const continuity='同一主体、同一人物外观与服装、同一器物（'+(d.vessel||'与菜品匹配的器皿')+'）、同一场景状态；保持食材从选材→处理→烹制→盛盘的前后因果。每镜切换不同角度、方向与运镜，分别突出制作节点，不重复同一运镜；相邻镜头使用动作匹配、视线匹配、器物匹配或声音桥，保持屏幕方向与空间轴线。大多数镜头以约 2.5 秒为电影化节奏参考，感官高潮、成品英雄镜头和情绪停顿可按动作完成度延长或放慢，不为凑时长切断动作。场景路线：'+sceneRoute+'。'+SCENES[x.sceneMode]+'转换时用动作或器物承接，不无理由换脸、换盘或跳变菜品。';
   const refs=[];
   if(x.refPhotoName) refs.push('@本地参照照片：'+x.refPhotoName+'（仅记录文件名；请在目标工具中重新绑定实际照片）');
   if(x.refImage) refs.push('@图1：'+x.refImage+'（文字说明；请在目标工具中绑定实际参考图）');
@@ -311,11 +333,11 @@ function compile(raw){
  const positioning=x.reality?'账号定位：'+profile.title+'。人设：'+profile.note+'反差只用可见动作和已有素材表达。':'定位：围绕菜品与制作过程，呈现真实食物质感。';
   const imageHeader='sayelf · 图片 Prompt\n'+refText+'\n'+brief+'\n主体：'+x.subject+'\n动态瞬间：'+x.action+'\n镜头：'+x.camera+'\n风格：'+x.style+'；'+d.color+'\n画幅：'+ratio+'（'+x.aspectRatio+'）\n'+continuity+'\n图片只描述静态关键帧，不要求一张图表达整段动作。';
  const cover='封面关键帧：'+x.subject+'；定格'+d.serve+'的单一瞬间；'+d.detail+'；'+x.camera+'；'+x.style+'。画面上方保留适量留白；不在图片中生成标题、字幕或商标。';
- const imageFrames=shots.map(s=>({id:s.id,start:s.start,end:s.end,beat:s.beat,framePrompt:s.id+' / '+s.start+'秒关键帧 ['+s.evidence+']\n'+x.subject+'；定格以下动作中的一个可见瞬间：'+s.action+'；'+s.camera+'；衔接依据：'+s.transition+'；'+s.detail+'；器物：'+s.vessel+'；场景：'+s.scene+'；'+x.style+'；'+ratio+'，自然物理与食物比例。'}));
+ const imageFrames=shots.map(s=>({id:s.id,start:s.start,end:s.end,beat:s.beat,framePrompt:s.id+' / '+s.start+'秒关键帧 ['+s.evidence+']\n'+x.subject+'；定格以下动作中的一个可见瞬间：'+s.action+'；'+s.camera+'；衔接依据：'+s.transition+'；节奏参考：'+s.rhythm+'，'+s.technique+'；'+s.detail+'；器物：'+s.vessel+'；场景：'+s.scene+'；'+x.style+'；'+ratio+'，自然物理与食物比例。'}));
  const imagePrompt=imageHeader+'\n\n'+cover+'\n\n'+imageFrames.map(f=>f.framePrompt).join('\n\n')+'\n\n避免：塑料质感、过度油亮、漂浮餐具、畸形手指、食品状态跳变。'+(x.noWatermark?'无画面水印。':'');
-  const videoPrompt='sayelf · 视频分镜 Prompt（Seedance 风格文本结构）\n'+refText+'\n\n'+brief+'\n主体：'+x.subject+'\n动态：'+x.action+'\n镜头统筹：'+x.camera+'\n风格提示：'+x.style+'；'+d.color+'\n菜品：'+x.dish+'；平台：'+x.platform+'；建议画幅：'+ratio+'（'+x.aspectRatio+'）；总时长：'+x.duration+'秒\n'+p.note+'（非平台官方规则）\n'+positioning+'\n情绪曲线：'+x.curve+'；节奏：'+tension+'\n'+continuity+'\n\n'+restrictions+'\n\n按以下顺序执行；“拍摄建议”不是发生过的事件，纪实作品请使用真实素材。每个时间段先完成上一镜的动作或声音承接，再切入下一镜。\n\n'+shots.map(s=>s.start+'-'+s.end+'秒：[切换镜头] '+s.camera+'。'+s.action+'。\n节点：'+s.label+'；情绪：'+s.emotion+'；声音：'+s.sound+'。\n转场：'+s.transition+'。\n'+s.phase+'；依据：'+s.evidence+'。'+(s.dialogue?'\n台词：'+s.start+'-'+s.end+'秒，现场原话（仅在原素材语境适用）：“'+s.dialogue+'”':'')).join('\n\n')+'\n\n母结构参考：'+BEATS.map(b=>b[1]).join(' → ')+'\n只使用本时间轴已选节点；缺失的节点不应由视频模型自行补演。\n交付前逐镜核对真实证据、参考绑定、时长、音轨、人物一致性与转场连续性。';
+ const videoPrompt='sayelf · 视频分镜 Prompt（Seedance 风格文本结构）\n'+refText+'\n\n'+brief+'\n主体：'+x.subject+'\n动态：'+x.action+'\n镜头统筹：'+x.camera+'\n风格提示：'+x.style+'；'+d.color+'\n菜品：'+x.dish+'；平台：'+x.platform+'；建议画幅：'+ratio+'（'+x.aspectRatio+'）；总时长：'+x.duration+'秒\n'+p.note+'（非平台官方规则）\n'+positioning+'\n情绪曲线：'+x.curve+'；节奏：'+tension+'\n电影化节奏：多数镜头约 2.5 秒；特殊镜头按故事动作完成度延长或放慢，允许 0.75× 慢动作、1.1× 快节奏和自然速度交替。\n'+continuity+'\n\n'+restrictions+'\n\n按以下顺序执行；“拍摄建议”不是发生过的事件，纪实作品请使用真实素材。每个时间段先完成上一镜的动作或声音承接，再切入下一镜。\n\n'+shots.map(s=>s.start+'-'+s.end+'秒：[切换镜头] '+s.camera+'。'+s.action+'。\n节点：'+s.label+'；情绪：'+s.emotion+'；声音：'+s.sound+'。\n节奏：'+s.rhythm+'；速度：'+s.speed+'；拍摄技法：'+s.technique+'。\n转场：'+s.transition+'。\n'+s.phase+'；依据：'+s.evidence+'。'+(s.dialogue?'\n台词：'+s.start+'-'+s.end+'秒，现场原话（仅在原素材语境适用）：“'+s.dialogue+'”':'')).join('\n\n')+'\n\n母结构参考：'+BEATS.map(b=>b[1]).join(' → ')+'\n只使用本时间轴已选节点；缺失的节点不应由视频模型自行补演。\n交付前逐镜核对真实证据、参考绑定、时长、音轨、人物一致性与转场连续性。';
  const cameraSet=new Set(shots.map(s=>s.camera));
- const result={version:VERSION,schema:'sayelf-food-video/v1.5',state:'NEEDS_REVIEW',input,errors:[],warnings,shots,imageFrames,imagePrompt,videoPrompt,coverPrompt:cover,meta:{ratio,aspectRatio:x.aspectRatio,fullStructure:full,verifiedByUser:verified,positioning,continuity,vessel:d.vessel||'与菜品匹配的器皿',scene:sceneRoute,sceneMode:x.sceneMode,realityProfile:profile.title,customDish:isCustom,selectedBeats:[...new Set(shots.map(s=>s.label))],storyNodes:keys,shotCountSource:'story-nodes',frameCount:imageFrames.length,videoShotCount:shots.length,countMatched:imageFrames.length===shots.length,cameraDiversity:{unique:cameraSet.size,total:shots.length,noExactRepeats:cameraSet.size===shots.length},classification:'Internal',epistemic:{Observation:'用户填写的素材陈述，未由程序核实',Inference:'镜头顺序、情绪与节奏建议',Hypothesis:'预设、待拍镜头与效果预期',Fact:'经程序校验的故事节点、时间轴、帧数、画幅、运镜差异与开关约束'}}};
+ const result={version:VERSION,schema:'sayelf-food-video/v1.5',state:'NEEDS_REVIEW',input,errors:[],warnings,shots,imageFrames,imagePrompt,videoPrompt,coverPrompt:cover,meta:{ratio,aspectRatio:x.aspectRatio,fullStructure:full,verifiedByUser:verified,positioning,continuity,vessel:d.vessel||'与菜品匹配的器皿',scene:sceneRoute,sceneMode:x.sceneMode,realityProfile:profile.title,customDish:isCustom,selectedBeats:[...new Set(shots.map(s=>s.label))],storyNodes:keys,shotCountSource:'story-nodes',timingPlan:'story-first-cinematic',targetShotSeconds:2.5,frameCount:imageFrames.length,videoShotCount:shots.length,countMatched:imageFrames.length===shots.length,cameraDiversity:{unique:cameraSet.size,total:shots.length,noExactRepeats:cameraSet.size===shots.length},classification:'Internal',epistemic:{Observation:'用户填写的素材陈述，未由程序核实',Inference:'镜头顺序、情绪、节奏与拍摄技法建议',Hypothesis:'预设、待拍镜头与效果预期',Fact:'经程序校验的故事节点、时间轴、帧数、画幅、运镜差异与开关约束'}}};
  const outputErrors=validateOutput(result);
  if(outputErrors.length){result.state='ERROR';result.errors=outputErrors;}
  return result;
@@ -390,8 +412,8 @@ function render(){
  $('#duration-stat').textContent=current.input.duration;$('#shots-stat').textContent=current.shots.length;$('#frames-stat').textContent=current.imageFrames.length+(current.meta.countMatched?' ✓':'');$('#ratio-stat').textContent=current.meta.ratio;
   setState('已生成','分镜、图片 Prompt 和视频 Prompt 已准备好。');
  $('#image-output').value=current.imagePrompt;$('#video-output').value=current.videoPrompt;
-  $('#board').replaceChildren();current.shots.forEach(s=>{const card=el('article',undefined,'shot');const time=el('div',s.start+'–'+s.end+'s','time');time.append(el('small',s.id));const body=el('div');body.append(el('h3',s.label+' / '+s.emotion),el('p',s.action),el('p',s.camera+' · '+s.sound,'meta'),el('p','转场：'+s.transition,'meta'),el('p','器物：'+s.vessel+' · 场景：'+s.scene,'meta'),el('p',s.evidence,'meta'));if(s.dialogue)body.append(el('p','原话：“'+s.dialogue+'”','meta'));const frame=current.imageFrames.find(f=>f.id===s.id),promptText='图片关键帧 Prompt\n'+(frame?.framePrompt||'')+'\n\n视频分镜 Prompt\n'+s.start+'-'+s.end+'秒：[切换镜头] '+s.camera+'。'+s.action+'。\n节点：'+s.label+'；情绪：'+s.emotion+'；声音：'+s.sound+'。\n转场：'+s.transition+'。\n'+s.phase+'；依据：'+s.evidence+'。';const promptDetails=el('details',undefined,'shot-prompt');promptDetails.append(el('summary','查看该镜 Prompt'));const promptBody=el('div',undefined,'shot-prompt-body');const promptArea=el('textarea');promptArea.className='shot-prompt-text';promptArea.readOnly=true;promptArea.value=promptText;const shotCopy=el('button','复制该镜 Prompt','secondary shot-copy');shotCopy.type='button';shotCopy.addEventListener('click',()=>copyText(promptText,'该镜 Prompt 已复制。'));promptBody.append(promptArea,shotCopy);promptDetails.append(promptBody);body.append(promptDetails);card.append(time,body);$('#board').append(card);});
- $('#checks').replaceChildren();['通过：从 0 秒到 '+current.input.duration+' 秒连续，无空隙、无重叠。','通过：主体、动态、镜头、风格齐全；双提示词有效。','已选节点：'+current.meta.selectedBeats.join(' → '),...current.warnings].forEach(t=>$('#checks').append(el('li',t)));
+  $('#board').replaceChildren();current.shots.forEach(s=>{const card=el('article',undefined,'shot');const time=el('div',s.start+'–'+s.end+'s','time');time.append(el('small',s.id));const body=el('div');body.append(el('h3',s.label+' / '+s.emotion),el('p',s.action),el('p',s.camera+' · '+s.sound,'meta'),el('p','转场：'+s.transition,'meta'),el('p','节奏：'+s.rhythm+' · '+s.speed,'meta'),el('p','拍摄技法：'+s.technique,'meta'),el('p','器物：'+s.vessel+' · 场景：'+s.scene,'meta'),el('p',s.evidence,'meta'));if(s.dialogue)body.append(el('p','原话：“'+s.dialogue+'”','meta'));const frame=current.imageFrames.find(f=>f.id===s.id),promptText='图片关键帧 Prompt\n'+(frame?.framePrompt||'')+'\n\n视频分镜 Prompt\n'+s.start+'-'+s.end+'秒：[切换镜头] '+s.camera+'。'+s.action+'。\n节点：'+s.label+'；情绪：'+s.emotion+'；声音：'+s.sound+'。\n节奏：'+s.rhythm+'；速度：'+s.speed+'；拍摄技法：'+s.technique+'。\n转场：'+s.transition+'。\n'+s.phase+'；依据：'+s.evidence+'。';const promptDetails=el('details',undefined,'shot-prompt');promptDetails.append(el('summary','查看该镜 Prompt'));const promptBody=el('div',undefined,'shot-prompt-body');const promptArea=el('textarea');promptArea.className='shot-prompt-text';promptArea.readOnly=true;promptArea.value=promptText;const shotCopy=el('button','复制该镜 Prompt','secondary shot-copy');shotCopy.type='button';shotCopy.addEventListener('click',()=>copyText(promptText,'该镜 Prompt 已复制。'));promptBody.append(promptArea,shotCopy);promptDetails.append(promptBody);body.append(promptDetails);card.append(time,body);$('#board').append(card);});
+ $('#checks').replaceChildren();['通过：从 0 秒到 '+current.input.duration+' 秒连续，无空隙、无重叠。','通过：主体、动态、镜头、风格齐全；双提示词有效。','已选节点：'+current.meta.selectedBeats.join(' → '),'节奏：多数镜头目标约 2.5 秒，特殊镜头按动作完成度调整。',...current.warnings].forEach(t=>$('#checks').append(el('li',t)));
 }
  function tab(name){activeTab=name;document.querySelectorAll('.tab').forEach(b=>{const chosen=b.dataset.tab===name;b.setAttribute('aria-selected',String(chosen));b.tabIndex=chosen?0:-1;});for(const key of ['board','image','video'])$('#pane-'+key).hidden=key!==name;}
 document.querySelectorAll('.tab').forEach(b=>{b.addEventListener('click',()=>tab(b.dataset.tab));b.addEventListener('keydown',e=>{if(!['ArrowRight','ArrowLeft','Home','End'].includes(e.key))return;e.preventDefault();const keys=['board','image','video'];let i=keys.indexOf(activeTab);i=e.key==='Home'?0:e.key==='End'?2:(i+(e.key==='ArrowRight'?1:2))%3;tab(keys[i]);$('#tab-'+keys[i]).focus();});});
