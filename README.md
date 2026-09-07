@@ -2,7 +2,7 @@
 
 **把一道菜，写成能拍的分镜。**
 
-v1.7.6 · 2026-09-07 · 单文件离线工具 + 独立创作 Skill。
+v1.7.7 · 2026-09-07 · 单文件离线工具 + 独立创作 Skill。
 
 ## 始终下载最新版
 
@@ -11,6 +11,10 @@ v1.7.6 · 2026-09-07 · 单文件离线工具 + 独立创作 Skill。
 - [直接打开/下载最新版 HTML](https://raw.githubusercontent.com/chuanxituzhu-lab/sayelf-food-video/main/sayelf-food-video.html)
 - [下载最新版商品 ZIP](https://raw.githubusercontent.com/chuanxituzhu-lab/sayelf-food-video/main/sayelf-food-video.zip)
 - [下载最新版仓库 ZIP](https://github.com/chuanxituzhu-lab/sayelf-food-video/archive/refs/heads/main.zip)
+- [查看/下载最新版 README](https://raw.githubusercontent.com/chuanxituzhu-lab/sayelf-food-video/main/README.md)
+- [下载最新版 SKILL](https://raw.githubusercontent.com/chuanxituzhu-lab/sayelf-food-video/main/SKILL.md)
+
+以上链接全部指向 GitHub `main` 分支，不绑定旧版本号或旧提交；每次推送后会自动指向最新更新。
 
 ## 开始使用
 
@@ -100,7 +104,7 @@ HTML 无外链资源、遥测、上传、自动保存或联网 API，且用内�
 
 ## 维护、验证与回滚
 
-本版为 1.7.6，规则变更须先用十一示范（含六道川菜）、自定义菜名、动态真人秀定位、品牌/创意/照片输入、分镜 Prompt 折叠与单镜复制、时长边界、画面比例、不同运镜、自然转场、故事驱动分镜数量、电影化节奏与普通/专业两条路径验证，再单示范试用后推广。保留旧 HTML、Skill 和导出配置，可通过替换文件回滚；没有自动升级或跨版本迁移。不同 schema 明确拒绝导入，避免静默破坏旧数据。
+本版为 1.7.7，规则变更须先用十一示范（含六道川菜）、自定义菜名、动态真人秀定位、品牌/创意/照片输入、分镜 Prompt 折叠与单镜复制、时长边界、画面比例、不同运镜、自然转场、故事驱动分镜数量、电影化节奏、最新版下载链接与普通/专业两条路径验证，再单示范试用后推广。保留旧 HTML、Skill 和导出配置，可通过替换文件回滚；没有自动升级或跨版本迁移。不同 schema 明确拒绝导入，避免静默破坏旧数据。
 
 测试结论与未测浏览器见 `VALIDATION.md`。提示词结构正确不代表生成画面、真实经营效果或传播效果已经验证。
 
@@ -110,6 +114,7 @@ HTML 无外链资源、遥测、上传、自动保存或联网 API，且用内�
 
 ### 版本重点
 
+- **v1.7.7 · 2026-09-07**：统一 README 的 HTML、ZIP、README 和 SKILL 下载入口为 GitHub `main` 最新文件；后续推送会自动覆盖同名文件。
 - **v1.7.6 · 2026-09-07**：在故事先决定分镜数量的基础上，按电影化节奏分配时间；多数镜头以约 2.5 秒为参考，感官高潮、成品英雄镜头和情绪停顿可延长或放慢，并在每镜标明速度与拍摄技法。
 - **v1.7.5 · 2026-09-07**：改为先按故事节点确定分镜数量，再将总时长分配到这些节点；无故事按选材→处理→烹制→盛盘，切片按可用故事节点，完整母结构保留十节点。短时长不再用固定 2 秒切片强行决定故事，只提示节奏较密。
 - **v1.7.4 · 2026-09-07**：为每个视频分镜增加自然转场说明，使用动作匹配、视线匹配、器物匹配、声音桥和空间轴保持；分镜卡片与视频 Prompt 同步显示上一镜到下一镜的衔接方式。
