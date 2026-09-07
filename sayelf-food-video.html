@@ -104,10 +104,10 @@ main{max-width:none;margin:0;padding:0 12px 18px}.intro{display:block;margin:0 -
 <noscript>此工具需要浏览器启用 JavaScript。无需连接网络。</noscript>
 <div class="toast" id="toast" role="status" hidden></div>
 <script>
-/* sayelf-food-video 1.7.2 — independent deterministic core; no DOM or IO. */
+/* sayelf-food-video 1.7.3 — independent deterministic core; no DOM or IO. */
 (function(root){
 'use strict';
-const VERSION='1.7.2';
+const VERSION='1.7.3';
 const DISHES={
  '油泼面':{detail:'宽面褶皱、辣椒碎与葱花清晰，红油薄亮不过曝',prep:'把煮好的宽面装碗，铺上辣子与葱花',peak:'热油准确泼在辣子上，油泡短促翻起，蒸汽自然上升',serve:'筷子挑起挂着红油的宽面，缓慢回落',sound:'热油接触辣子的短促滋啦声',color:'暖红、麦黄与厨房自然光',vessel:'粗陶大碗',stages:[['选材','面粉、辣椒面、葱花与当日鲜肉臊，摆在操作台'],['处理','和面、醒面、拉成宽面，记录面片厚薄'],['烹制','宽面入沸水，捞出沥水，铺辣子与葱花'],['盛盘','粗陶大碗承接热油，挑面展示挂汁']]},
  '火锅':{detail:'红汤油滴、花椒和食材纤维清晰，锅沿干净',prep:'将备好的食材摆到锅旁，筷子夹起一片食材',peak:'食材下入沸腾红汤，气泡破开并带起蒸汽',serve:'捞起熟透的食材，汤汁沿边缘滴落',sound:'汤底咕嘟声与食材入锅声',color:'暖红汤色与柔和侧逆光',vessel:'分格铜锅',stages:[['选材','毛肚、鸭肠、蔬菜和红汤底料分区摆好'],['处理','食材清洗切配，特写毛肚纹理与蘸料碟'],['烹制','红汤烧开，食材分次下锅并记录熟度'],['盛盘','从锅中捞出装入小碟，汤汁自然回落']]},
@@ -264,7 +264,19 @@ function compile(raw){
   '平稳治愈':['平静','专注','松弛','温暖','满足'],
   '先馋后叙':['惊喜','好奇','理解','温暖','回味']
  };
- const cameras=['近景交代空间','特写锁定手部','侧面近景','微距固定机位','成品近景'];
+ const cameraAngles=['高位俯拍','45°侧前方','正侧面','低机位','过肩视角','餐桌端景'];
+ const cameraMoves=['横移','推近','拉远','跟拍','环绕','摇镜'];
+ const cameraDirections=['左→右','右→左','前→后','后→前','顺时针','逆时针'];
+ const cameraFocus={
+  event:'人物、台面与操作环境',flaw:'食材状态或操作细节',stakes:'出餐节奏与关键影响',conflict:'双手动作与人物距离',emotion:'人物神态与现场反应',decision:'老板决断与动作落点',turn:'承担责任的手部与器物',sense:'热油、沸腾或脆响的瞬间',reward:'成品色泽、纹理与器皿关系',next:'收尾动作与下一步线索',
+  intro:'人物、台面与操作环境',select:'食材分区与取材顺序',prep:'刀工、拌料与食材质感',cook:'锅气、火候、蒸汽与热油',plate:'出锅到器皿的落位过程',detail:'酱汁、纹理与色泽细节'
+ };
+ const cameraForShot=(i,key)=>{
+  const angle=cameraAngles[i%cameraAngles.length],move=cameraMoves[Math.floor(i/2)%cameraMoves.length],direction=cameraDirections[Math.floor(i/3)%cameraDirections.length];
+  const focus=cameraFocus[key]||'食材制作过程与成品重点';
+  const lens=key==='sense'?'微距锁定瞬态':key==='reward'?'食物近景保持浅景深':'自然景深保留环境关系';
+  return angle+move+'，'+direction+'；'+lens+'突出'+focus;
+ };
  const tension=['舒缓完整动作','轻微节奏对比','紧凑切换与短暂停顿','突出动作速度与停顿反差，不煽动人物对抗'][x.conflict];
  const shots=times.map((time,i)=>{
   const key=keys[Math.min(keys.length-1,Math.floor(i*keys.length/times.length))];
@@ -276,12 +288,12 @@ function compile(raw){
   const evidence=allowed?'用户陈述·已声明素材可用':'拍摄建议·待核实';
   const emotion=emotionMap[x.curve][Math.min(4,Math.floor(i*5/times.length))];
   const dialogue=Boolean(x.dialogue&&verified&&x.quote&&key==='decision'&&time.end-time.start>=x.quote.length/4&&(!i||keys[Math.min(keys.length-1,Math.floor((i-1)*keys.length/times.length))]!==key))?x.quote:'';
-  return {...time,id:'S'+String(i+1).padStart(2,'0'),beat:key,label:labels[key],action,evidence,camera:key==='sense'?'微距固定机位，完整保留动作起落':cameras[i%5],emotion,
+  return {...time,id:'S'+String(i+1).padStart(2,'0'),beat:key,label:labels[key],action,evidence,camera:cameraForShot(i,key),emotion,
    sound:x.asmr?(key==='sense'?d.sound+'；突出瞬态但不削波':key==='reward'?'轻微餐具声，保留环境底噪':'现场操作声，避免夸张音效'):'自然环境声，不强化 ASMR',dialogue,
    detail:d.detail,foodStage,vessel:d.vessel||'与菜品匹配的器皿',scene:sceneRoute,phase:i&&keys[Math.floor((i-1)*keys.length/times.length)]===key?'延续上一镜动作，改看手部或食材局部，勿重复表演':'一个明确动作，避免同镜塞入多次转场'};
  });
  if(x.dialogue&&x.quote&&verified&&!shots.some(s=>s.dialogue)) warnings.push('原话未能在当前决断镜头内自然说完，未强塞台词；请延长镜头或缩短原话。');
- const continuity='同一主体、同一人物外观与服装、同一器物（'+(d.vessel||'与菜品匹配的器皿')+'）、同一场景状态；保持食材从选材→处理→烹制→盛盘的前后因果。场景路线：'+sceneRoute+'。'+SCENES[x.sceneMode]+'转换时用动作或器物承接，不无理由换脸、换盘或跳变菜品。';
+ const continuity='同一主体、同一人物外观与服装、同一器物（'+(d.vessel||'与菜品匹配的器皿')+'）、同一场景状态；保持食材从选材→处理→烹制→盛盘的前后因果。每镜切换不同角度、方向与运镜，分别突出制作节点，不重复同一运镜。场景路线：'+sceneRoute+'。'+SCENES[x.sceneMode]+'转换时用动作或器物承接，不无理由换脸、换盘或跳变菜品。';
   const refs=[];
   if(x.refPhotoName) refs.push('@本地参照照片：'+x.refPhotoName+'（仅记录文件名；请在目标工具中重新绑定实际照片）');
   if(x.refImage) refs.push('@图1：'+x.refImage+'（文字说明；请在目标工具中绑定实际参考图）');
@@ -297,7 +309,8 @@ function compile(raw){
  const imageFrames=shots.map(s=>({id:s.id,start:s.start,end:s.end,beat:s.beat,framePrompt:s.id+' / '+s.start+'秒关键帧 ['+s.evidence+']\n'+x.subject+'；定格以下动作中的一个可见瞬间：'+s.action+'；'+s.camera+'；'+s.detail+'；器物：'+s.vessel+'；场景：'+s.scene+'；'+x.style+'；'+ratio+'，自然物理与食物比例。'}));
  const imagePrompt=imageHeader+'\n\n'+cover+'\n\n'+imageFrames.map(f=>f.framePrompt).join('\n\n')+'\n\n避免：塑料质感、过度油亮、漂浮餐具、畸形手指、食品状态跳变。'+(x.noWatermark?'无画面水印。':'');
   const videoPrompt='sayelf · 视频分镜 Prompt（Seedance 风格文本结构）\n'+refText+'\n\n'+brief+'\n主体：'+x.subject+'\n动态：'+x.action+'\n镜头统筹：'+x.camera+'\n风格提示：'+x.style+'；'+d.color+'\n菜品：'+x.dish+'；平台：'+x.platform+'；建议画幅：'+ratio+'（'+x.aspectRatio+'）；总时长：'+x.duration+'秒\n'+p.note+'（非平台官方规则）\n'+positioning+'\n情绪曲线：'+x.curve+'；节奏：'+tension+'\n'+continuity+'\n\n'+restrictions+'\n\n按以下顺序执行；“拍摄建议”不是发生过的事件，纪实作品请使用真实素材。\n\n'+shots.map(s=>s.start+'-'+s.end+'秒：[切换镜头] '+s.camera+'。'+s.action+'。\n节点：'+s.label+'；情绪：'+s.emotion+'；声音：'+s.sound+'。\n'+s.phase+'；依据：'+s.evidence+'。'+(s.dialogue?'\n台词：'+s.start+'-'+s.end+'秒，现场原话（仅在原素材语境适用）：“'+s.dialogue+'”':'')).join('\n\n')+'\n\n母结构参考：'+BEATS.map(b=>b[1]).join(' → ')+'\n只使用本时间轴已选节点；缺失的节点不应由视频模型自行补演。\n交付前逐镜核对真实证据、参考绑定、时长、音轨与人物一致性。';
- const result={version:VERSION,schema:'sayelf-food-video/v1.5',state:'NEEDS_REVIEW',input,errors:[],warnings,shots,imageFrames,imagePrompt,videoPrompt,coverPrompt:cover,meta:{ratio,aspectRatio:x.aspectRatio,fullStructure:full,verifiedByUser:verified,positioning,continuity,vessel:d.vessel||'与菜品匹配的器皿',scene:sceneRoute,sceneMode:x.sceneMode,realityProfile:profile.title,customDish:isCustom,selectedBeats:[...new Set(shots.map(s=>s.label))],frameCount:imageFrames.length,videoShotCount:shots.length,countMatched:imageFrames.length===shots.length,classification:'Internal',epistemic:{Observation:'用户填写的素材陈述，未由程序核实',Inference:'镜头顺序、情绪与节奏建议',Hypothesis:'预设、待拍镜头与效果预期',Fact:'经程序校验的字段、时间轴、帧数、画幅与开关约束'}}};
+ const cameraSet=new Set(shots.map(s=>s.camera));
+ const result={version:VERSION,schema:'sayelf-food-video/v1.5',state:'NEEDS_REVIEW',input,errors:[],warnings,shots,imageFrames,imagePrompt,videoPrompt,coverPrompt:cover,meta:{ratio,aspectRatio:x.aspectRatio,fullStructure:full,verifiedByUser:verified,positioning,continuity,vessel:d.vessel||'与菜品匹配的器皿',scene:sceneRoute,sceneMode:x.sceneMode,realityProfile:profile.title,customDish:isCustom,selectedBeats:[...new Set(shots.map(s=>s.label))],frameCount:imageFrames.length,videoShotCount:shots.length,countMatched:imageFrames.length===shots.length,cameraDiversity:{unique:cameraSet.size,total:shots.length,noExactRepeats:cameraSet.size===shots.length},classification:'Internal',epistemic:{Observation:'用户填写的素材陈述，未由程序核实',Inference:'镜头顺序、情绪与节奏建议',Hypothesis:'预设、待拍镜头与效果预期',Fact:'经程序校验的字段、时间轴、帧数、画幅、运镜差异与开关约束'}}};
  const outputErrors=validateOutput(result);
  if(outputErrors.length){result.state='ERROR';result.errors=outputErrors;}
  return result;
@@ -312,6 +325,9 @@ function validateOutput(r){
  }
  if(Math.abs(last-r.input.duration)>1e-7) errors.push('分镜总时长与输入不一致。');
  if(!r.imagePrompt||!r.videoPrompt) errors.push('双 Prompt 输出不完整。');
+ const cameraTexts=r.shots.map(s=>s.camera),movementTokens=['横移','推近','拉远','跟拍','环绕','摇镜'],directionTokens=['左→右','右→左','前→后','后→前','顺时针','逆时针'];
+ if(new Set(cameraTexts).size!==cameraTexts.length) errors.push('视频分镜存在重复运镜描述，请重新编译。');
+ if(r.shots.some(s=>!movementTokens.some(token=>s.camera.includes(token))||!directionTokens.some(token=>s.camera.includes(token)))) errors.push('视频分镜缺少明确的运镜方向或移动方式。');
  if(!Array.isArray(r.imageFrames)||r.imageFrames.length!==r.shots.length||r.meta?.countMatched!==true) errors.push('图片关键帧数量必须与视频分镜数量匹配。');
  if(r.imageFrames?.some((f,i)=>f.id!==r.shots[i]?.id||f.start!==r.shots[i]?.start||f.end!==r.shots[i]?.end)) errors.push('图片关键帧与视频分镜的编号或时间不一致。');
  return errors;
