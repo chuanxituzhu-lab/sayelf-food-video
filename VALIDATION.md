@@ -14,7 +14,7 @@
 - 电影化节奏验证通过：12 秒切片示范的多数镜头落在 1.5–3.5 秒区间；感官高潮标记 0.75× 慢动作建议，收尾标记 1.1× 快节奏建议。
 - 每次输出均通过 `imageFrames.length === shots.length`，且图片帧与视频分镜逐一共享 `id/start/end`。
 - 动态工作流验证通过：默认模式按菜品工艺、故事、场景、声音和连续性信号选择角色并记录 `meta.workflow`；留空四要素时生成可追踪建议；手动模式仍会阻断空字段。
-- GSAP Motion Layer 验证通过：页面暴露 `globalThis.SayelfMotion` 共享入口；宿主未注入 GSAP 时使用同一入口的原生降级，`available=false`，且无外部脚本；`reveal/reset` 不改变镜头、Prompt 或状态机；系统开启减少动效时入口停用动画而保留内容可见。
+- GSAP Motion Layer 验证通过：页面暴露 `globalThis.SayelfMotion` 共享入口；宿主未注入 GSAP 时使用同一入口的原生降级，`available=false`，且无外部脚本；用本地模拟宿主注入验证了 `context → fromTo → kill/revert` 调用链；`reveal/reset` 不改变镜头、Prompt 或状态机；系统开启减少动效时入口停用动画而保留内容可见。
 - 事件先行验证通过：普通事件输入进入统一 Core；事件及已填写节点先决定 `shots/imageFrames` 数量，`meta.eventFirst / eventSupplied / shotCountSource / shotCountReason` 可追踪；主体、动态、镜头、风格仅作为专业表达覆盖。
 - 参考手法蒸馏验证通过：`meta.productionCard` 输出食材、做法、工艺序列、时间逻辑、角色/场景锚点、参考绑定和负面约束；每个分镜输出 `movement/edit/sfx/vfx`，且图像关键帧与视频分镜共同引用这些字段。
 - 自定义菜名可从普通输入或专业设置进入；未收录菜品使用川味通用四段工艺、器皿和场景路线，并在警告中标注为通用建议。
