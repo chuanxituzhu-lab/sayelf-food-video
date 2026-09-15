@@ -2,7 +2,7 @@
 
 **把一道菜，写成能拍的分镜。**
 
-v1.11.0 · 2026-09-14 · 单文件离线工具 + 独立创作 Skill。
+v1.12.0 · 2026-09-15 · 单文件离线工具 + 独立创作 Skill。
 
 ## 始终下载最新版
 
@@ -93,6 +93,8 @@ HTML 无外链资源、遥测、上传、自动保存或联网 API，且用内�
 
 单 HTML 内按边界组织：`SayelfFood` Core → 菜品 `DISHES` / 平台 `PLATFORMS` 数据 → 图片/视频文本编译 → UI / 本地导入导出。Core 不访问 DOM、存储或网络，可从 HTML 第一段 script 单独提取运行。真人秀、ASMR、配乐等开关可关闭；没有必须安装的第三方插件。
 
+GSAP Motion Layer 是 UI 的共享能力，不是新的 Skill，也不进入 Core。页面暴露 `globalThis.SayelfMotion`（`reveal(targets, options)`、`reset(targets)`、`engine`、`available`、`prefersReducedMotion`）；宿主已经注入 `globalThis.gsap` 时直接复用其 `fromTo/to/context` 能力，独立 HTML 不加载 CDN 或外部脚本，未注入时使用同一入口的原生降级，用户开启减少动效时自动停用。后续 Skill 只调用这层，不重复设计动效底座。
+
 配置格式为 `sayelf-food-video/v1`（输出 schema 为 `sayelf-food-video/v1.5`），输出 API 为 `SayelfFood.compile(input)`；成功包含 `shots,imageFrames,imagePrompt,videoPrompt,warnings,meta`，结构错误返回 `state: ERROR` 与 `errors`。`workflowMode` 默认 `dynamic`，`meta.eventFirst`、`meta.eventSupplied`、`meta.shotCountSource` 和 `meta.shotCountReason` 记录事件是否先决定节点；`meta.workflow` 记录本次内容触发的角色、依赖和判断信号，`meta.brief/derivedFields` 记录可选表达覆盖，`meta.productionCard` 记录料理卡与连续性锚点，每镜包含 `movement/edit/sfx/vfx`。内容需人工核对时状态为 `NEEDS_REVIEW`。JSON 下载只存输入与版本，避免把旧结果误当新结果；导入后重新生成。普通模式默认隐藏四要素、校验、母结构和配置工具，专业用户展开后才显示。
 
 中英文界面使用 HTML 内嵌的本地语言资源，不加载翻译服务；Core 先生成唯一的镜头编号、时间轴和工艺节点，语言适配器只翻译展示层和内置建议，图片关键帧与视频分镜仍共享同一组 `id/start/end`。生成记录是本次页面会话内存，不写入浏览器存储，关闭页面即清除。
@@ -115,12 +117,13 @@ HTML 无外链资源、遥测、上传、自动保存或联网 API，且用内�
 | [AI Visual Director](https://github.com/jijiutong/ai-visual-director) | 镜头技法库、角色/场景一致性和多项 QC |
 | [OpenCanvas](https://github.com/robinrheem/opencanvas) | 连续性状态记忆与 QA 选择；本产品用轻量锚点和验证器吸收 |
 | [Seedance shot-list continuity](https://github.com/Emily2040/seedance-2.0/blob/main/references/shot-list-continuity.md) | `@Image`/`@Audio` 参考、接入/交出状态、失败后拆分动作 |
+| [GSAP `to()`](https://gsap.com/docs/v3/GSAP/gsap.to%28%29/) / [Timeline `fromTo()`](https://gsap.com/docs/v3/GSAP/Timeline/fromTo%28%29/) / [`context()`](https://gsap-docs.netlify.app/docs/v3/gsap/gsap.context%28%29/) | 共享补间、时间线和可清理上下文；本产品蒸馏为单一 Motion Layer 入口，不绑定 CDN |
 
 只观察公开 README 并蒸馏机制；未复制实现、模板或媒体，未运行上述工具。完整差距分析和已知限制见 `BUILD-DECISION.md`。本包不含其代码或依赖；未来使用其实现时另查适用许可证。sayelf 与上述项目及 Seedance 无官方关联声明。
 
 ## 维护、验证与回滚
 
-本版为 1.11.0，规则变更须先用十一示范（含六道川菜）、事件先行输入、事件细节改变分镜数量、四要素隐藏与专业覆盖、动态角色分工、手动四要素校验、料理卡、逐镜剪辑/声音/视觉字段、负面约束、动态真人秀定位、品牌/创意/照片输入、分镜 Prompt 折叠与单镜复制、时长边界、画面比例、不同运镜、自然转场、电影化节奏、中英文切换、生成记录恢复、最新版下载链接与普通/专业两条路径验证，再单示范试用后推广。保留旧 HTML、Skill 和导出配置，可通过替换文件回滚；没有自动升级或跨版本迁移。不同 schema 明确拒绝导入，避免静默破坏旧数据。
+本版为 1.12.0，规则变更须先用十一示范（含六道川菜）、事件先行输入、事件细节改变分镜数量、四要素隐藏与专业覆盖、动态角色分工、手动四要素校验、料理卡、逐镜剪辑/声音/视觉字段、负面约束、动态真人秀定位、品牌/创意/照片输入、分镜 Prompt 折叠与单镜复制、时长边界、画面比例、不同运镜、自然转场、电影化节奏、中英文切换、生成记录恢复、GSAP Motion Layer 共享入口与原生降级、最新版下载链接与普通/专业两条路径验证，再单示范试用后推广。保留旧 HTML、Skill 和导出配置，可通过替换文件回滚；没有自动升级或跨版本迁移。不同 schema 明确拒绝导入，避免静默破坏旧数据。
 
 测试结论与未测浏览器见 `VALIDATION.md`。提示词结构正确不代表生成画面、真实经营效果或传播效果已经验证。
 
@@ -129,6 +132,8 @@ HTML 无外链资源、遥测、上传、自动保存或联网 API，且用内�
 以后每次功能或规则更新都递增版本号，并同步更新 HTML、SKILL、README、验证记录和 ZIP 商品包。README 顶部保留当前版本号与日期；本节只记录每一版的重点变化，便于用户快速判断是否需要替换文件。版本号采用 `主版本.次版本.修订号`：新增功能递增次版本，兼容性或文字修正递增修订号；若配置结构不兼容，必须在 README 和验证记录中明确说明。
 
 ### 版本重点
+
+- **v1.12.0 · 2026-09-15**：预留 GSAP Motion Layer 共享能力，统一 `SayelfMotion.reveal/reset` 调用；宿主注入 GSAP 时复用，独立 HTML 无外部依赖时原生降级并尊重减少动效设置；不新增 Skill、不改 Core 输出契约。
 
 - **v1.11.0 · 2026-09-14**：普通界面隐藏主体/动态/镜头/风格栏，新增事件/故事线索主入口；故事事件与已填写节点先决定分镜数量，四要素仅作为专业表达覆盖；Skill 与双 Prompt 增加事件优先契约和验证。
 
