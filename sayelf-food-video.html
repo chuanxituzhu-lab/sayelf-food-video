@@ -59,6 +59,7 @@ main{max-width:none;margin:0;padding:0 12px 18px}.intro{display:block;margin:0 -
 .motion-in{animation:sayelf-motion-in .36s cubic-bezier(.22,.8,.28,1) both;animation-delay:var(--motion-delay,0ms)}
 @keyframes sayelf-motion-in{from{opacity:0;transform:translate3d(0,10px,0)}to{opacity:1;transform:none}}
 @media(prefers-reduced-motion:reduce){.motion-in{animation:none!important;opacity:1!important;transform:none!important}}
+.fde-view{display:grid;gap:8px;margin:4px 0 8px}.fde-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.fde-item{padding:9px 10px;border:1px solid #314761;border-radius:5px;background:#111e31}.fde-item b{display:block;color:#8ea4bb;font-size:10px;font-weight:600;margin-bottom:3px}.fde-item strong{display:block;color:#d9e7f4;font-size:11px;line-height:1.5;font-weight:500}.fde-item .fde-pass{color:#8cf3cd}.fde-item .fde-review{color:#f2c892}@media(max-width:520px){.fde-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -101,7 +102,7 @@ main{max-width:none;margin:0;padding:0 12px 18px}.intro{display:block;margin:0 -
 <details id="run-history" class="professional-output"><summary>生成记录与恢复</summary><p class="hint">本次打开期间保留记录，关闭页面后清除。</p><ol id="run-events" class="evidence-list"></ol><button type="button" class="secondary" id="restore" disabled>恢复上一份有效方案</button></details><div class="result-tools"><button type="button" class="secondary export" id="copy" disabled>复制当前内容</button><button type="button" class="secondary export" id="txt" disabled>下载全部 TXT</button></div>
 <div class="tabs" role="tablist" aria-label="结果类型"><button type="button" class="tab" id="tab-board" role="tab" aria-controls="pane-board" aria-selected="true" data-tab="board">分镜预览</button><button type="button" class="tab" id="tab-image" role="tab" aria-controls="pane-image" aria-selected="false" tabindex="-1" data-tab="image">图片 Prompt</button><button type="button" class="tab" id="tab-video" role="tab" aria-controls="pane-video" aria-selected="false" tabindex="-1" data-tab="video">视频 Prompt</button></div>
 <div id="results"><div id="pane-board" role="tabpanel" aria-labelledby="tab-board"><div id="board" class="timeline"><div class="empty">从事件、菜品或场景开始<br><small>也可以选择上方示范，一键载入再生成</small></div></div></div><div id="pane-image" role="tabpanel" aria-labelledby="tab-image" hidden><textarea class="output-text" id="image-output" aria-label="图片 Prompt 输出" readonly></textarea></div><div id="pane-video" role="tabpanel" aria-labelledby="tab-video" hidden><textarea class="output-text" id="video-output" aria-label="视频 Prompt 输出" readonly></textarea></div></div>
-<details id="professional-output" class="professional-output"><summary>专业用户：查看校验、母结构与配置</summary><div class="pro-output-body"><details id="validation-details"><summary>校验结果与使用边界</summary><ul id="checks" class="evidence-list"><li>先生成方案，即可查看时间轴与素材依据检查。</li></ul><p class="hint">“结构通过”仅表示字段与时间轴有效。素材真实性、肖像/声音授权、生成质量及发布效果需要人工判断。无爆款承诺。</p></details><details><summary>动态分工工作流</summary><div id="workflow-view" class="workflow-view"><p class="hint">生成后查看本次内容选择的角色、依赖和交接。</p></div></details><details><summary>冻结母结构</summary><p class="hint">真实事件 → 小缺点 → 放大矛盾 → 人物冲突 → 情绪拉满 → 老板决断 → 人性反转 → 滋啦一声 → 美食奖励 → 留下下一集问题</p><p class="hint">完整模式建议至少 20 秒；短片选择少量节点，不离“油泼面创业真人秀”主线。非油泼面菜品以适合它的现场声替代“滋啦”。</p></details><div class="pro-actions"><button type="button" class="secondary export" id="json" disabled>下载配置 JSON</button></div></div></details>
+<details id="professional-output" class="professional-output"><summary>专业用户：查看校验、母结构与配置</summary><div class="pro-output-body"><details id="validation-details"><summary>校验结果与使用边界</summary><ul id="checks" class="evidence-list"><li>先生成方案，即可查看时间轴与素材依据检查。</li></ul><p class="hint">“结构通过”仅表示字段与时间轴有效。素材真实性、肖像/声音授权、生成质量及发布效果需要人工判断。无爆款承诺。</p></details><details><summary>动态分工工作流</summary><div id="workflow-view" class="workflow-view"><p class="hint">生成后查看本次内容选择的角色、依赖和交接。</p></div></details><details><summary>FDE 现场交付卡</summary><div id="fde-view" class="fde-view"><p class="hint">生成后查看交付目标、验收门、下一步和恢复点。</p></div></details><details><summary>冻结母结构</summary><p class="hint">真实事件 → 小缺点 → 放大矛盾 → 人物冲突 → 情绪拉满 → 老板决断 → 人性反转 → 滋啦一声 → 美食奖励 → 留下下一集问题</p><p class="hint">完整模式建议至少 20 秒；短片选择少量节点，不离“油泼面创业真人秀”主线。非油泼面菜品以适合它的现场声替代“滋啦”。</p></details><div class="pro-actions"><button type="button" class="secondary export" id="json" disabled>下载配置 JSON</button></div></div></details>
 </div></section>
 </div>
 <footer class="foot"><span>sayelf · 好吃看得见，真实留得住。</span><span>本地规则编译 · 无账号 / 无上传 / 无自动保存</span></footer>
@@ -109,10 +110,10 @@ main{max-width:none;margin:0;padding:0 12px 18px}.intro{display:block;margin:0 -
 <noscript>此工具需要浏览器启用 JavaScript。无需连接网络。</noscript>
 <div class="toast" id="toast" role="status" hidden></div>
 <script>
-/* sayelf-food-video 1.12.0 — independent deterministic core; no DOM or IO. */
+/* sayelf-food-video 1.13.0 — independent deterministic core; no DOM or IO. */
 (function(root){
 'use strict';
-const VERSION='1.12.0';
+const VERSION='1.13.0';
 const DISHES={
  '油泼面':{detail:'宽面褶皱、辣椒碎与葱花清晰，红油薄亮不过曝',prep:'把煮好的宽面装碗，铺上辣子与葱花',peak:'热油准确泼在辣子上，油泡短促翻起，蒸汽自然上升',serve:'筷子挑起挂着红油的宽面，缓慢回落',sound:'热油接触辣子的短促滋啦声',color:'暖红、麦黄与厨房自然光',vessel:'粗陶大碗',stages:[['选材','面粉、辣椒面、葱花与当日鲜肉臊，摆在操作台'],['处理','和面、醒面、拉成宽面，记录面片厚薄'],['烹制','宽面入沸水，捞出沥水，铺辣子与葱花'],['盛盘','粗陶大碗承接热油，挑面展示挂汁']]},
  '火锅':{detail:'红汤油滴、花椒和食材纤维清晰，锅沿干净',prep:'将备好的食材摆到锅旁，筷子夹起一片食材',peak:'食材下入沸腾红汤，气泡破开并带起蒸汽',serve:'捞起熟透的食材，汤汁沿边缘滴落',sound:'汤底咕嘟声与食材入锅声',color:'暖红汤色与柔和侧逆光',vessel:'分格铜锅',stages:[['选材','毛肚、鸭肠、蔬菜和红汤底料分区摆好'],['处理','食材清洗切配，特写毛肚纹理与蘸料碟'],['烹制','红汤烧开，食材分次下锅并记录熟度'],['盛盘','从锅中捞出装入小碟，汤汁自然回落']]},
@@ -796,6 +797,27 @@ function renderWorkflow(){
  });
 }
 
+function renderFde(){
+ const box=$('#fde-view');
+ if(!box)return;
+ if(!current){box.replaceChildren(el('p',language==='en'?'Generate a plan to view the field delivery card.':'生成后查看现场交付卡。','hint'));return;}
+ const x=current.input,meta=current.meta||{},english=language==='en',text=(zh,en)=>english?en:zh;
+ const status=current.state==='NEEDS_REVIEW'?text('需要人工复核','Needs human review'):(current.state||text('已生成','Plan ready'));
+ const timelineOk=current.shots?.length>0&&current.shots[0].start===0&&current.shots.at(-1).end===x.duration&&current.shots.every((s,i)=>s.end>s.start&&(i===0||s.start===current.shots[i-1].end));
+ const gates=[
+  [text('时间轴连续','Timeline continuity'),timelineOk,text('通过','Pass'),text('需检查','Review')],
+  [text('图片 / 视频匹配','Image / video match'),Boolean(meta.countMatched),text('通过','Pass'),text('需检查','Review')],
+  [text('运镜差异','Camera diversity'),Boolean(meta.cameraDiversity?.noExactRepeats),text('通过','Pass'),text('需检查','Review')],
+  [text('素材真实性','Source truth'),Boolean(meta.verifiedByUser),text('已声明','Declared'),text('待人工核对','Human review')]
+ ];
+ const goal=x.event?text('把“'+x.event+'”转为可拍的 '+x.dish+' 现场方案','Turn “'+x.event+'” into a shootable '+x.dish+' field plan'):text('把 '+x.dish+' 从选材到盛盘转为可拍方案','Turn '+x.dish+' from selection to plating into a shootable plan');
+ const next=current.warnings?.length?text('先处理：'+current.warnings[0],'Next: '+current.warnings[0]):text('交给拍摄者核对真实事件、授权和参考绑定。','Hand off for review of source truth, rights and reference bindings.');
+ const reference=(x.refPhotoName||x.refImage||x.refAudio)?text('参考已记录，交给目标工具前需重新绑定。','References recorded; rebind them in the target tool.') : text('未提供参考绑定。','No reference binding supplied.');
+ const item=(label,value,cls='')=>{const node=el('div',undefined,'fde-item');node.append(el('b',label),el('strong',value,'fde-'+cls));return node;};
+ const grid=el('div',undefined,'fde-grid');grid.append(item(text('交付目标','Delivery goal'),goal),item(text('当前状态','Current state'),status,status==='Needs human review'||status==='需要人工复核'?'review':'pass'),item(text('验收门','Acceptance gates'),gates.map(g=>g[0]+'：'+(g[1]?g[2]:g[3])).join(' · '),gates.every(g=>g[1])?'pass':'review'),item(text('参考与连续性','References / continuity'),reference),item(text('下一步','Next action'),next),item(text('恢复点','Recovery point'),checkpoint?text('可恢复最近一次有效方案。','Latest valid plan can be restored.'):text('本次生成后建立检查点。','A checkpoint is created after this run.')),item(text('交接结果','Handoff'),text('图片关键帧与视频分镜已对齐，可复制或下载交接。','Image keyframes and video shots are aligned for copy or download.')));
+ box.replaceChildren(grid);
+}
+
 function render(){
  $('#results').classList.remove('old');document.querySelectorAll('.export').forEach(b=>b.disabled=false);
   const profile=C.realityProfile(current.input.dish);$('#result-title').textContent=T(current.input.dish)+' · '+(current.input.reality?T(profile.title):(language==='en'?'Food film':'食欲短片'));
@@ -803,7 +825,7 @@ function render(){
   setState('已生成','分镜、图片 Prompt 和视频 Prompt 已准备好。');
  $('#image-output').value=current.imagePrompt;$('#video-output').value=current.videoPrompt;
   $('#board').replaceChildren();current.shots.forEach(s=>{const card=el('article',undefined,'shot');const time=el('div',s.start+'–'+s.end+'s','time');time.append(el('small',s.id));const body=el('div');body.append(el('h3',s.label+' / '+s.emotion),el('p',s.action),el('p',s.camera+' · '+s.sound,'meta'),el('p',T('转场：')+s.transition,'meta'),el('p',T('节奏：')+s.rhythm+' · '+s.speed,'meta'),el('p',T('拍摄技法：')+s.technique,'meta'),el('p',T('器物：')+s.vessel+' · '+T('场景：')+s.scene,'meta'),el('p',s.evidence,'meta'));if(s.dialogue)body.append(el('p','原话：“'+s.dialogue+'”','meta'));const frame=current.imageFrames.find(f=>f.id===s.id),promptText='图片关键帧 Prompt\n'+(frame?.framePrompt||'')+'\n\n视频分镜 Prompt\n'+s.start+'-'+s.end+'秒：[切换镜头] '+s.camera+'。'+s.action+'。\n节点：'+s.label+'；情绪：'+s.emotion+'；声音：'+s.sound+'。\n节奏：'+s.rhythm+'；速度：'+s.speed+'；拍摄技法：'+s.technique+'。\n转场：'+s.transition+'。\n'+s.phase+'；依据：'+s.evidence+'。';const promptDetails=el('details',undefined,'shot-prompt');promptDetails.append(el('summary','查看该镜 Prompt'));const promptBody=el('div',undefined,'shot-prompt-body');const promptArea=el('textarea');promptArea.className='shot-prompt-text';promptArea.readOnly=true;promptArea.value=language==='en'?'Image keyframe Prompt\n'+frame.framePrompt+'\n\nVideo shot Prompt\n'+current.videoShot(s):promptText;const shotCopy=el('button','复制该镜 Prompt','secondary shot-copy');shotCopy.type='button';shotCopy.addEventListener('click',()=>copyText(promptArea.value,'该镜 Prompt 已复制。'));promptBody.append(promptArea,shotCopy);promptDetails.append(promptBody);body.append(promptDetails);card.append(time,body);$('#board').append(card);});
- SayelfMotion.reveal('#result-title, .metrics .metric, #board .shot',{stagger:.04});renderWorkflow();$('#checks').replaceChildren();if(language==='en'){['Timeline validated: 0–'+current.input.duration+'s, no gaps or overlaps.','Image and video IDs and time ranges match.','Recipe and source material require human review.',...current.warnings].forEach(t=>$('#checks').append(el('li',t)));return;}['通过：从 0 秒到 '+current.input.duration+' 秒连续，无空隙、无重叠。','通过：主体、动态、镜头、风格齐全；双提示词有效。','已选节点：'+current.meta.selectedBeats.join(' → '),'节奏：多数镜头目标约 2.5 秒，特殊镜头按动作完成度调整。',...current.warnings].forEach(t=>$('#checks').append(el('li',t)));
+ SayelfMotion.reveal('#result-title, .metrics .metric, #board .shot',{stagger:.04});renderWorkflow();renderFde();$('#checks').replaceChildren();if(language==='en'){['Timeline validated: 0–'+current.input.duration+'s, no gaps or overlaps.','Image and video IDs and time ranges match.','Recipe and source material require human review.',...current.warnings].forEach(t=>$('#checks').append(el('li',t)));return;}['通过：从 0 秒到 '+current.input.duration+' 秒连续，无空隙、无重叠。','通过：主体、动态、镜头、风格齐全；双提示词有效。','已选节点：'+current.meta.selectedBeats.join(' → '),'节奏：多数镜头目标约 2.5 秒，特殊镜头按动作完成度调整。',...current.warnings].forEach(t=>$('#checks').append(el('li',t)));
 }
  function tab(name){activeTab=name;document.querySelectorAll('.tab').forEach(b=>{const chosen=b.dataset.tab===name;b.setAttribute('aria-selected',String(chosen));b.tabIndex=chosen?0:-1;});for(const key of ['board','image','video'])$('#pane-'+key).hidden=key!==name;}
 document.querySelectorAll('.tab').forEach(b=>{b.addEventListener('click',()=>tab(b.dataset.tab));b.addEventListener('keydown',e=>{if(!['ArrowRight','ArrowLeft','Home','End'].includes(e.key))return;e.preventDefault();const keys=['board','image','video'];let i=keys.indexOf(activeTab);i=e.key==='Home'?0:e.key==='End'?2:(i+(e.key==='ArrowRight'?1:2))%3;tab(keys[i]);$('#tab-'+keys[i]).focus();});});
