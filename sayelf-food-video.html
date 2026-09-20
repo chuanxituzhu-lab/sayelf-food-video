@@ -59,7 +59,7 @@ main{max-width:none;margin:0;padding:0 12px 18px}.intro{display:block;margin:0 -
 .motion-in{animation:sayelf-motion-in .36s cubic-bezier(.22,.8,.28,1) both;animation-delay:var(--motion-delay,0ms)}
 @keyframes sayelf-motion-in{from{opacity:0;transform:translate3d(0,10px,0)}to{opacity:1;transform:none}}
 @media(prefers-reduced-motion:reduce){.motion-in{animation:none!important;opacity:1!important;transform:none!important}}
-.fde-view{display:grid;gap:8px;margin:4px 0 8px}.fde-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.fde-item{padding:9px 10px;border:1px solid #314761;border-radius:5px;background:#111e31}.fde-item b{display:block;color:#8ea4bb;font-size:10px;font-weight:600;margin-bottom:3px}.fde-item strong{display:block;color:#d9e7f4;font-size:11px;line-height:1.5;font-weight:500}.fde-item .fde-pass{color:#8cf3cd}.fde-item .fde-review{color:#f2c892}@media(max-width:520px){.fde-grid{grid-template-columns:1fr}}
+ .fde-view{display:grid;gap:8px;margin:4px 0 8px}.fde-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.fde-item{padding:9px 10px;border:1px solid #314761;border-radius:5px;background:#111e31}.fde-item b{display:block;color:#8ea4bb;font-size:10px;font-weight:600;margin-bottom:3px}.fde-item strong{display:block;color:#d9e7f4;font-size:11px;line-height:1.5;font-weight:500}.fde-item .fde-pass{color:#8cf3cd}.fde-item .fde-review{color:#f2c892}.brand-kb{border:1px solid #314761;border-radius:6px;background:#132238;padding:10px 11px;margin:0 0 12px}.brand-kb .field{margin-bottom:8px}.brand-kb-actions{display:flex;gap:8px;flex-wrap:wrap}.brand-kb small{display:block;margin-top:7px}@media(max-width:520px){.fde-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -73,7 +73,8 @@ main{max-width:none;margin:0;padding:0 12px 18px}.intro{display:block;margin:0 -
 <p class="simple-note">普通模式先写事件，再选择菜品和场景；系统按事件与工艺决定故事节点、分镜数量、镜头与节奏。</p>
 <p class="simple-note" id="language-note">界面与内置提示词随语言切换；自填内容保留原文。</p><form id="form" novalidate>
 <div class="fields">
-<div class="quick-fields"><div class="row"><label class="field"><span>菜品</span><select name="quickDish"></select><input name="quickDishCustom" type="text" maxlength="80" placeholder="或输入新的菜品名称"><small class="hint">输入新菜名后会优先使用它，按川味通用工艺生成。</small></label><label class="field"><span>场景</span><select name="quickScene"></select></label></div><label class="field event-field"><span>事件 / 故事线索 <em>先写发生了什么</em></span><textarea name="quickEvent" maxlength="2000" placeholder="例如：晚高峰出餐前，老板发现肉片厚薄不一，决定先重做一份"></textarea><small class="hint">事件先决定节点和分镜数量；没有真实素材时会标为待拍摄建议。</small></label><p class="hint">自动匹配会根据菜品从备料案台、灶台到出菜位安排场景。</p></div>
+ <div class="quick-fields"><div class="row"><label class="field"><span>菜品</span><select name="quickDish"></select><input name="quickDishCustom" type="text" maxlength="80" placeholder="或输入新的菜品名称"><small class="hint">输入新菜名后会优先使用它，按川味通用工艺生成。</small></label><label class="field"><span>场景</span><select name="quickScene"></select></label></div><label class="field event-field"><span>事件 / 故事线索 <em>先写发生了什么</em></span><textarea name="quickEvent" maxlength="2000" placeholder="例如：晚高峰出餐前，老板发现肉片厚薄不一，决定先重做一份"></textarea><small class="hint">事件先决定节点和分镜数量；没有真实素材时会标为待拍摄建议。</small></label><p class="hint">自动匹配会根据菜品从备料案台、灶台到出菜位安排场景。</p></div>
+ <div class="brand-kb" id="brand-kb"><label class="field"><span>品牌知识库</span><select id="brand-profile-select" aria-label="品牌知识库"></select></label><div class="brand-kb-actions"><button type="button" class="secondary" id="brand-profile-apply">调用品牌档案</button><button type="button" class="text-button" id="brand-profile-manage">维护品牌档案</button></div><small class="hint">选择后调用；档案只保存在本机，不会上传。</small></div>
 <details id="professional-settings" class="professional-settings"><summary>专业用户：打开高级设置</summary><div class="pro-body">
 <label class="field"><span>主体 <em>可选表达覆盖</em></span><textarea name="subject" maxlength="2000"></textarea><small class="hint">默认由事件、菜品和工艺共同决定；填写后只覆盖主体表达。</small></label>
 <label class="field"><span>动态 <em>可选表达覆盖</em></span><textarea name="action" maxlength="2000"></textarea><small class="hint">默认由事件节点拆成动作；填写后只覆盖动作表达。</small></label>
@@ -81,7 +82,8 @@ main{max-width:none;margin:0;padding:0 12px 18px}.intro{display:block;margin:0 -
 <label class="field"><span>创作分工模式</span><select name="workflowMode"><option value="dynamic">按内容动态分工</option><option value="manual">四要素手动约束</option></select><small class="hint">默认由事件、菜品、场景和声音选择角色；手动模式才把四要素作为硬约束。</small></label>
 <div class="row"><label class="field"><span>菜品类型</span><select name="dish"></select><input name="customDish" type="text" maxlength="80" placeholder="选择“自定义菜品…”后输入菜名"><small class="hint">六道川菜有专属工艺；自定义菜名按川味通用四段工艺兜底。</small></label><label class="field"><span>发布平台</span><select name="platform"></select></label></div>
 <div class="row"><label class="field"><span>品牌 / 门店</span><input name="brand" type="text" maxlength="2000" placeholder="例如：本地川味小馆"></label><label class="field"><span>创意主题</span><input name="creativeIdea" type="text" maxlength="2000" placeholder="例如：一锅红汤看见后厨协作"></label></div>
-<label class="field"><span>场景补充</span><textarea name="sceneNotes" maxlength="2000" placeholder="例如：老街二层小店、雨后夜市、木桌与铜锅；可留空让系统自动匹配"></textarea></label>
+ <details id="brand-profile-editor"><summary>品牌知识库：保存 / 管理当前品牌</summary><label class="field"><span>品牌档案名称</span><input name="brandProfileName" type="text" maxlength="80" placeholder="例如：川味小馆主品牌"></label><label class="field"><span>品牌声音 / 口吻</span><textarea name="brandVoice" maxlength="2000" placeholder="例如：直接、克制、讲究火候，不制造假冲突"></textarea></label><label class="field"><span>品牌视觉规则</span><textarea name="brandVisualRules" maxlength="2000" placeholder="例如：深色木案台、暖红酱色、保留蒸汽和食材纹理"></textarea></label><label class="field"><span>品牌连续性规则</span><textarea name="brandContinuityRules" maxlength="2000" placeholder="例如：固定同一围裙、器皿和出菜方向；场景转换用器物承接"></textarea></label><div class="pro-actions"><button type="button" class="secondary" id="brand-profile-save">保存到本机知识库</button><button type="button" class="secondary" id="brand-profile-delete">删除当前档案</button><button type="button" class="secondary" id="brand-profile-export">导出品牌知识库</button><button type="button" class="secondary" id="brand-profile-import">导入品牌知识库</button></div><input type="file" id="brand-kb-file" accept="application/json,.json" hidden></details>
+ <label class="field"><span>场景补充</span><textarea name="sceneNotes" maxlength="2000" placeholder="例如：老街二层小店、雨后夜市、木桌与铜锅；可留空让系统自动匹配"></textarea></label>
 <label class="field"><span>场景模式 <em>自动匹配人物、器物与环境</em></span><select name="sceneMode"></select><small class="hint">自动模式按菜品串联案台、灶台、出菜位；也可指定室内后厨、街头摊位、旷野外景或餐桌成品。</small></label>
 <label class="field"><span>画面比例</span><select name="aspectRatio"></select><small class="hint">自动匹配视频号、抖音、通用竖屏为 9:16，小红书为 3:4；也可指定 3:4、16:9、4:5。</small></label>
 <div class="row"><label class="field"><span>时长 <em>6–60 秒</em></span><input name="duration" type="number" min="6" max="60" step="0.1" required></label><label class="field"><span>故事性</span><select name="story"><option>无故事</option><option>切片</option><option>完整母结构</option></select></label></div>
@@ -105,16 +107,17 @@ main{max-width:none;margin:0;padding:0 12px 18px}.intro{display:block;margin:0 -
 <details id="professional-output" class="professional-output"><summary>专业用户：查看校验、母结构与配置</summary><div class="pro-output-body"><details id="validation-details"><summary>校验结果与使用边界</summary><ul id="checks" class="evidence-list"><li>先生成方案，即可查看时间轴与素材依据检查。</li></ul><p class="hint">“结构通过”仅表示字段与时间轴有效。素材真实性、肖像/声音授权、生成质量及发布效果需要人工判断。无爆款承诺。</p></details><details><summary>动态分工工作流</summary><div id="workflow-view" class="workflow-view"><p class="hint">生成后查看本次内容选择的角色、依赖和交接。</p></div></details><details><summary>FDE 现场交付卡</summary><div id="fde-view" class="fde-view"><p class="hint">生成后查看交付目标、验收门、下一步和恢复点。</p></div></details><details><summary>冻结母结构</summary><p class="hint">真实事件 → 小缺点 → 放大矛盾 → 人物冲突 → 情绪拉满 → 老板决断 → 人性反转 → 滋啦一声 → 美食奖励 → 留下下一集问题</p><p class="hint">完整模式建议至少 20 秒；短片选择少量节点，不离“油泼面创业真人秀”主线。非油泼面菜品以适合它的现场声替代“滋啦”。</p></details><div class="pro-actions"><button type="button" class="secondary export" id="json" disabled>下载配置 JSON</button></div></div></details>
 </div></section>
 </div>
-<footer class="foot"><span>sayelf · 好吃看得见，真实留得住。</span><span>本地规则编译 · 无账号 / 无上传 / 无自动保存</span></footer>
+ <footer class="foot"><span>sayelf · 好吃看得见，真实留得住。</span><span>本地规则编译 · 无账号 / 无上传 / 品牌库仅保存在本机</span></footer>
 </main>
 <noscript>此工具需要浏览器启用 JavaScript。无需连接网络。</noscript>
 <div class="toast" id="toast" role="status" hidden></div>
 <script>
-/* sayelf-food-video 1.14.0 — independent deterministic core; no DOM or IO. */
+/* sayelf-food-video 1.15.0 — independent deterministic core; no DOM or IO. */
 (function(root){
 'use strict';
-const VERSION='1.14.0';
+const VERSION='1.15.0';
 const TIMING_REFERENCE_SECONDS=2;
+const BRAND_PROFILE_SCHEMA='sayelf-food-video/brand-kb/v1';
 const DISHES={
  '油泼面':{detail:'宽面褶皱、辣椒碎与葱花清晰，红油薄亮不过曝',prep:'把煮好的宽面装碗，铺上辣子与葱花',peak:'热油准确泼在辣子上，油泡短促翻起，蒸汽自然上升',serve:'筷子挑起挂着红油的宽面，缓慢回落',sound:'热油接触辣子的短促滋啦声',color:'暖红、麦黄与厨房自然光',vessel:'粗陶大碗',stages:[['选材','面粉、辣椒面、葱花与当日鲜肉臊，摆在操作台'],['处理','和面、醒面、拉成宽面，记录面片厚薄'],['烹制','宽面入沸水，捞出沥水，铺辣子与葱花'],['盛盘','粗陶大碗承接热油，挑面展示挂汁']]},
  '火锅':{detail:'红汤油滴、花椒和食材纤维清晰，锅沿干净',prep:'将备好的食材摆到锅旁，筷子夹起一片食材',peak:'食材下入沸腾红汤，气泡破开并带起蒸汽',serve:'捞起熟透的食材，汤汁沿边缘滴落',sound:'汤底咕嘟声与食材入锅声',color:'暖红汤色与柔和侧逆光',vessel:'分格铜锅',stages:[['选材','毛肚、鸭肠、蔬菜和红汤底料分区摆好'],['处理','食材清洗切配，特写毛肚纹理与蘸料碟'],['烹制','红汤烧开，食材分次下锅并记录熟度'],['盛盘','从锅中捞出装入小碟，汤汁自然回落']]},
@@ -234,7 +237,15 @@ function normalize(raw={}){
  x.workflowMode=String(x.workflowMode||'dynamic').trim();
  x.customDish=String(x.customDish||'').trim();
  if(x.customDish) x.dish=x.customDish;
+ const profile=normalizeBrandProfile(raw.brandProfile);
+ if(profile) x.brandProfile=profile;
  return x;
+}
+function normalizeBrandProfile(raw){
+ if(!raw||typeof raw!=='object'||Array.isArray(raw)) return null;
+ const clip=(value,max)=>String(value??'').trim().slice(0,max);
+ const profile={schema:BRAND_PROFILE_SCHEMA,id:clip(raw.id,120),name:clip(raw.name,80),brand:clip(raw.brand,200),creativeIdea:clip(raw.creativeIdea,2000),sceneNotes:clip(raw.sceneNotes,2000),voice:clip(raw.voice,2000),visualRules:clip(raw.visualRules,2000),continuityRules:clip(raw.continuityRules,2000),updatedAt:clip(raw.updatedAt,40)};
+ return profile.name||profile.brand||profile.creativeIdea||profile.voice||profile.visualRules||profile.continuityRules?profile:null;
 }
 function validate(x){
  const errors=[];
@@ -290,7 +301,7 @@ function timing(duration,keys){
  let cursor=0;return units.map(unit=>{const start=cursor;cursor+=unit;return {start:start/10,end:cursor/10};});
 }
 function compile(raw){
- const input=normalize(raw),errors=validate(input);
+  const input=normalize(raw),profileFromInput=normalizeBrandProfile(raw?.brandProfile);if(profileFromInput)input.brandProfile=profileFromInput;const errors=validate(input);
  if(errors.length) return {version:VERSION,state:'ERROR',errors,warnings:[],input};
  const d=dishProfile(input.dish),workflow=selectWorkflow(input,d),brief=resolveBrief(input,d,workflow),x={...input,...brief},p=PLATFORMS[x.platform],warnings=[],sceneRoute=x.sceneMode==='自动匹配'?(d.scene||'同一操作空间'):x.sceneMode,ratio=x.aspectRatio==='自动匹配'?p.ratio:x.aspectRatio;
  const isCustom=!DISHES[x.dish];
@@ -391,7 +402,8 @@ function compile(raw){
   if(x.refImage) refs.push('@图1：'+x.refImage+'（文字说明；请在目标工具中绑定实际参考图）');
   if(x.refAudio) refs.push('@音频1：'+x.refAudio+'（文字说明；仅使用有授权的声音参考）');
   const refText=refs.length?refs.join('\n'):'参考：未指定；使用文字描述，不假设存在参考图或音频。';
-  const briefText='品牌 / 门店：'+(x.brand||'未指定')+'\n创意主题：'+(x.creativeIdea||'未指定')+'\n场景补充：'+(x.sceneNotes||'未指定');
+  const bp=x.brandProfile||null,brandContext=bp?'\n品牌知识库档案：'+(bp.name||bp.brand||'未命名')+'（本机调用）\n品牌口吻：'+(bp.voice||'未指定')+'\n品牌视觉规则：'+(bp.visualRules||'未指定')+'\n品牌连续性规则：'+(bp.continuityRules||'未指定'):'';
+   const briefText='品牌 / 门店：'+(x.brand||'未指定')+'\n创意主题：'+(x.creativeIdea||'未指定')+'\n场景补充：'+(x.sceneNotes||'未指定')+brandContext;
  const music=x.noBgm?'无BGM，保留所列现场声。':'配乐建议：'+(x.curve==='平稳治愈'?'稀疏柔和器乐，稳定慢拍':'轻节奏器乐，随动作推进')+'；使用已获授权音乐，人声与食物原声优先，感官高潮处降低配乐。';
  const restrictions=[music,x.noSubtitles?'无字幕。':'字幕建议：后期只添加核实后的信息或原话，避开食物主体。',x.noWatermark?'无画面水印（生成约束，不保证供应商执行）。':'水印按目标工具默认策略处理。'].join('\n');
   const recipe=recipeCard(x.dish,d,x.duration,keys.length),negativePrompt='避免：字幕、画面文字、商标水印、漂浮餐具、畸形手指、塑料食物、过度油亮、食材状态跳变、无依据人物冲突、无因果场景跳转。';
@@ -406,7 +418,7 @@ function compile(raw){
     let videoPrompt='sayelf · 视频分镜 Prompt（Seedance 风格文本结构）\n'+refText+'\n\n'+briefText+'\n'+eventBrief+'\n主体：'+x.subject+'\n动态：'+x.action+'\n镜头统筹：'+x.camera+'\n风格提示：'+x.style+'；'+d.color+'\n菜品：'+x.dish+'；平台：'+x.platform+'；建议画幅：'+ratio+'（'+x.aspectRatio+'）；总时长：'+x.duration+'秒\n'+p.note+'（非平台官方规则）\n'+positioning+'\n情绪曲线：'+x.curve+'；节奏：'+tension+'\n电影化节奏：普通镜头通常以约 2 秒作为参考，不固定切成 2 秒；事件节点与动作完成度先决定分镜数量和每镜实际时长，关键镜头可延长、压缩或放慢，允许 0.75× 慢动作、1.1× 快节奏和自然速度交替。\n'+continuity+'\n\n'+restrictions+'\n\n按以下顺序执行；“拍摄建议”不是发生过的事件，纪实作品请使用真实素材。事件先确定节点和镜头数量，镜头只负责把节点拍清；每个时间段先完成上一镜的动作或声音承接，再切入下一镜。\n\n'+shots.map(s=>s.start+'-'+s.end+'秒：[切换镜头] '+s.camera+'。'+s.action+'。\n节点：'+s.label+'；情绪：'+s.emotion+'；声音：'+s.sound+'。\n节奏：'+s.rhythm+'；速度：'+s.speed+'；拍摄技法：'+s.technique+'。\n转场：'+s.transition+'。\n'+s.phase+'；依据：'+s.evidence+'。'+(s.dialogue?'\n台词：'+s.start+'-'+s.end+'秒，现场原话（仅在原素材语境适用）：“'+s.dialogue+'”':'')).join('\n\n')+'\n\n母结构参考：'+BEATS.map(b=>b[1]).join(' → ')+'\n只使用本时间轴已选节点；缺失的节点不应由视频模型自行补演。\n交付前逐镜核对真实证据、参考绑定、时长、音轨、人物一致性与转场连续性。';
    videoPrompt='料理卡：食材摘要：'+recipe.ingredients+'；做法：'+recipe.method+'；工艺序列：'+recipe.sequence+'；时间逻辑：'+recipe.timeLogic+'\n角色锚点：'+productionCard.characterKey+'\n场景锚点：'+productionCard.locationKey+'\n'+videoPrompt+'\n\n逐镜剪辑/声音/视觉约束：\n'+shots.map(s=>s.start+'-'+s.end+'秒 '+s.id+'；运动：'+s.movement+'；剪辑：'+s.edit+'；SFX：'+s.sfx+'；VFX：'+s.vfx).join('\n')+'\n\n负面约束：'+negativePrompt;
  const cameraSet=new Set(shots.map(s=>s.camera));
-   const result={version:VERSION,schema:'sayelf-food-video/v1.5',state:'NEEDS_REVIEW',input,errors:[],warnings,shots,imageFrames,imagePrompt,videoPrompt,coverPrompt:cover,meta:{ratio,aspectRatio:x.aspectRatio,fullStructure:full,verifiedByUser:verified,positioning,continuity,vessel:d.vessel||'与菜品匹配的器皿',scene:sceneRoute,sceneMode:x.sceneMode,realityProfile:profile.title,customDish:isCustom,brief,derivedFields:brief.derivedFields||[],workflow,productionCard,negativePrompt,selectedBeats:[...new Set(shots.map(s=>s.label))],storyNodes:keys,shotCountSource:eventPlan.source,shotCountReason:eventPlan.reason,eventFirst:true,eventSupplied:Boolean(x.event),timingPlan:'story-first-cinematic',timingReference:'soft',targetShotSeconds:TIMING_REFERENCE_SECONDS,frameCount:imageFrames.length,videoShotCount:shots.length,countMatched:imageFrames.length===shots.length,cameraDiversity:{unique:cameraSet.size,total:shots.length,noExactRepeats:cameraSet.size===shots.length},classification:'Internal',epistemic:{Observation:'用户填写的素材陈述，未由程序核实',Inference:'镜头顺序、情绪、节奏与拍摄技法建议',Hypothesis:'预设、待拍镜头与效果预期',Fact:'经程序校验的故事节点、时间轴、帧数、画幅、运镜差异与开关约束'}}};
+   const result={version:VERSION,schema:'sayelf-food-video/v1.5',state:'NEEDS_REVIEW',input,errors:[],warnings,shots,imageFrames,imagePrompt,videoPrompt,coverPrompt:cover,meta:{ratio,aspectRatio:x.aspectRatio,fullStructure:full,verifiedByUser:verified,positioning,continuity,vessel:d.vessel||'与菜品匹配的器皿',scene:sceneRoute,sceneMode:x.sceneMode,realityProfile:profile.title,customDish:isCustom,brandProfile:bp?{schema:bp.schema,id:bp.id,name:bp.name,brand:bp.brand,updatedAt:bp.updatedAt}:null,brief,derivedFields:brief.derivedFields||[],workflow,productionCard,negativePrompt,selectedBeats:[...new Set(shots.map(s=>s.label))],storyNodes:keys,shotCountSource:eventPlan.source,shotCountReason:eventPlan.reason,eventFirst:true,eventSupplied:Boolean(x.event),timingPlan:'story-first-cinematic',timingReference:'soft',targetShotSeconds:TIMING_REFERENCE_SECONDS,frameCount:imageFrames.length,videoShotCount:shots.length,countMatched:imageFrames.length===shots.length,cameraDiversity:{unique:cameraSet.size,total:shots.length,noExactRepeats:cameraSet.size===shots.length},classification:'Internal',epistemic:{Observation:'用户填写的素材陈述，未由程序核实',Inference:'镜头顺序、情绪、节奏与拍摄技法建议',Hypothesis:'预设、待拍镜头与效果预期',Fact:'经程序校验的故事节点、时间轴、帧数、画幅、运镜差异与开关约束'}}};
  const outputErrors=validateOutput(result);
  if(outputErrors.length){result.state='ERROR';result.errors=outputErrors;}
  return result;
@@ -432,9 +444,9 @@ function importConfig(text){
  if(typeof text!=='string'||text.length>100000) throw new Error('配置文件过大，限制为 100 KB。');
  let data;try{data=JSON.parse(text);}catch{throw new Error('无法读取 JSON，请选择本工具导出的配置。');}
   if(!['sayelf-food-video/v1','sayelf-food-video/v1.1','sayelf-food-video/v1.2','sayelf-food-video/v1.3','sayelf-food-video/v1.4','sayelf-food-video/v1.5'].includes(data?.schema)||!data.input||typeof data.input!=='object'||Array.isArray(data.input)) throw new Error('配置版本或结构不受支持。');
- const x=normalize(data.input),errors=validate(x);if(errors.length) throw new Error(errors.join('\n'));return x;
+  const x=normalize(data.input),profile=normalizeBrandProfile(data.input.brandProfile);if(profile)x.brandProfile=profile;const errors=validate(x);if(errors.length) throw new Error(errors.join('\n'));return x;
 }
- const api={VERSION,DISHES,REALITY_PROFILES,PLATFORMS,SCENES,RATIOS,BEATS,DEFAULTS,EXAMPLES,WORKFLOW_ROLES,normalize,validate,selectWorkflow,resolveBrief,eventFirstPlan,recipeCard,timing,compile,validateOutput,importConfig,dishProfile,realityProfile};
+ const api={VERSION,BRAND_PROFILE_SCHEMA,DISHES,REALITY_PROFILES,PLATFORMS,SCENES,RATIOS,BEATS,DEFAULTS,EXAMPLES,WORKFLOW_ROLES,normalize,normalizeBrandProfile,validate,selectWorkflow,resolveBrief,eventFirstPlan,recipeCard,timing,compile,validateOutput,importConfig,dishProfile,realityProfile};
 if(typeof module!=='undefined'&&module.exports) module.exports=api;
 else root.SayelfFood=api;
 })(typeof globalThis!=='undefined'?globalThis:this);
@@ -480,6 +492,20 @@ FOOD VIDEO PROMPT WEBUI // 美食短视频生成工坊|FOOD VIDEO PROMPT WEBUI
 菜品类型|Dish type
 发布平台|Platform
 品牌 / 门店|Brand / restaurant
+品牌知识库|Brand knowledge base
+调用品牌档案|Use brand profile
+维护品牌档案|Manage brand profiles
+选择后调用；档案只保存在本机，不会上传。|Select a profile to use it; profiles stay on this device and are never uploaded.
+不调用品牌档案|No brand profile
+品牌知识库：保存 / 管理当前品牌|Brand knowledge base: save / manage current brand
+品牌档案名称|Profile name
+品牌声音 / 口吻|Brand voice
+品牌视觉规则|Visual rules
+品牌连续性规则|Continuity rules
+保存到本机知识库|Save to local library
+删除当前档案|Delete current profile
+导出品牌知识库|Export brand library
+导入品牌知识库|Import brand library
 创意主题|Creative idea
 场景补充|Setting notes
 场景模式|Setting mode
@@ -536,7 +562,7 @@ FDE 现场交付卡|FDE field delivery card
 冻结母结构|Story structure reference
 下载配置 JSON|Download configuration JSON
 sayelf · 好吃看得见，真实留得住。|sayelf · Food worth seeing. Stories worth keeping.
-本地规则编译 · 无账号 / 无上传 / 无自动保存|Local processing · No account / uploads / autosave
+本地规则编译 · 无账号 / 无上传 / 品牌库仅保存在本机|Local processing · No account / uploads / brand library stays on this device
 此工具需要浏览器启用 JavaScript。无需连接网络。|Enable JavaScript to use this tool. No internet connection needed.
 查看该镜 Prompt|Open shot prompts
 复制该镜 Prompt|Copy shot prompts
@@ -695,7 +721,8 @@ function english(C,r){
  const scene=x.sceneMode==='自动匹配'?'Prep counter → cooking station → serving area':t(x.sceneMode);
  const continuity='Keep the same people, clothing, vessels, ingredient state and screen direction. Preserve the 180-degree axis. Use action, eyeline, vessel or sound matches between shots. For an outdoor-to-indoor move, carry the same basket or vessel through the transition. Complete each action before cutting. Ordinary shots use about 2 seconds as a soft rhythm reference, not a fixed duration; story beats and action completion decide the actual length, with special shots allowed to run longer, compress or slow down. Setting route: '+scene+'.';
   const eventBrief=`Event line: ${x.event||'Not provided; use the recipe stages as a filming proposal.'}\nEvent-first rule: let the event or process beats set the shot count; camera fields only express how to film them.`;
-  const brief=`Dish: ${dish}\n${eventBrief}\nSubject: ${subject}\nAction: ${action}\nCamera direction: ${camera}\nStyle: ${style}\nBrand / restaurant: ${x.brand||'Not specified'}\nCreative idea: ${x.creativeIdea||'Not specified'}\nSetting notes: ${x.sceneNotes||'Not specified'}\nAspect ratio: ${r.meta.ratio}\nPlatform: ${t(x.platform)}\nEmotional arc: ${t(x.curve)}\n${continuity}`;
+ const bp=x.brandProfile||r.meta?.brandProfile||null,brandContext=bp?`\nBrand knowledge profile: ${bp.name||bp.brand||'Unnamed'} (local profile)\nBrand voice: ${bp.voice||'Not specified'}\nVisual rules: ${bp.visualRules||'Not specified'}\nContinuity rules: ${bp.continuityRules||'Not specified'}`:'';
+  const brief=`Dish: ${dish}\n${eventBrief}\nSubject: ${subject}\nAction: ${action}\nCamera direction: ${camera}\nStyle: ${style}\nBrand / restaurant: ${x.brand||'Not specified'}\nCreative idea: ${x.creativeIdea||'Not specified'}\nSetting notes: ${x.sceneNotes||'Not specified'}${brandContext}\nAspect ratio: ${r.meta.ratio}\nPlatform: ${t(x.platform)}\nEmotional arc: ${t(x.curve)}\n${continuity}`;
  const refs=[x.refPhotoName?'@Photo reference: '+x.refPhotoName+' (filename only; reattach in the target tool)':'',x.refImage?'@Image1: '+x.refImage+' (description; bind the actual reference in the target tool)':'',x.refAudio?'@Audio1: '+x.refAudio+' (authorized reference only; reattach in target tool)':''].filter(Boolean).join('\n')||'References: none specified.';
   const conditions=[x.noBgm?'No BGM; retain location sound.':'Use licensed instrumental music; lower it for food sounds and speech.',x.noSubtitles?'No subtitles.':'Add only verified captions in post-production.',x.noWatermark?'No watermark requested; provider compliance must be checked.':'Use the target tool watermark policy.'].join('\n');
   const card=r.meta?.productionCard||{},recipeEn={dish:dish,ingredients:p[2],method:p.slice(2).join(' → '),sequence:'Ingredients → Preparation → Cooking → Plating',timeLogic:`${x.duration}s total; let ${r.shots.length} story/recipe beats set the shot count, then allocate time by action completion. Compress repeated prep with match cuts; hold resting, reduction and sensory peaks when needed.`},negativeEn='Avoid: subtitles, screen text, logos or watermarks, floating utensils, malformed hands, plastic-looking food, excessive gloss, discontinuous ingredient states, unsupported conflict or causeless location jumps.';
@@ -737,8 +764,8 @@ const SayelfMotion=(function(root){
  return Object.freeze({engine,available:Boolean(gsap),prefersReducedMotion:reduced,reveal,reset});
 })(globalThis);
 globalThis.SayelfMotion=SayelfMotion;
-const C=SayelfFood,form=document.querySelector('#form'),$=s=>document.querySelector(s),CUSTOM_DISH='__custom__';
-let language='zh',canonical=null,checkpoint=null,revision=0,runNumber=0;const ledger=[];
+ const C=SayelfFood,form=document.querySelector('#form'),$=s=>document.querySelector(s),CUSTOM_DISH='__custom__',BRAND_STORAGE_KEY='sayelf-food-video/brand-kb/v1';
+ let language='zh',canonical=null,checkpoint=null,revision=0,runNumber=0,brandProfiles=[],activeBrandProfileId='',draftBrandProfile=null;const ledger=[];
 const L=SayelfLocale;L.register(C);const T=text=>L.t(text,language);
 const staticNodes=[],staticAttrs=[];const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);while(walker.nextNode()){const n=walker.currentNode;if(!['SCRIPT','STYLE'].includes(n.parentElement.tagName)&&n.textContent.trim())staticNodes.push([n,n.textContent]);}document.querySelectorAll('[placeholder],[aria-label],[alt]').forEach(n=>['placeholder','aria-label','alt'].forEach(a=>{if(n.hasAttribute(a))staticAttrs.push([n,a,n.getAttribute(a)]);}));
 let current=null,dirty=true,activeTab='board',exampleIndex=0,toastTimer,photoUrl='';
@@ -754,14 +781,21 @@ for(const key of Object.keys(C.SCENES)) form.elements.quickScene.add(new Option(
 const evidenceNames={event:'真实事件',flaw:'小缺点',stakes:'矛盾的实际影响',conflictEvidence:'人物分歧 / 原话',emotion:'可见情绪',decision:'老板实际决断',turn:'真实反转 / 承担责任',next:'下一集可拍的问题'};
 for(const [key,label] of Object.entries(evidenceNames)) {const wrap=el('label',undefined,'field');wrap.append(el('span',label));const input=el('textarea');input.name=key;input.maxLength=2000;input.placeholder=key==='event'?'例如：某次出餐检查的真实可见过程，以及对应素材编号':'没有真实素材可留空';wrap.append(input);$('#evidence-fields').append(wrap);}
 C.EXAMPLES.forEach((item,i)=>{const b=el('button',undefined,'example');b.type='button';b.dataset.example=i;b.append(el('span','0'+(i+1),'number'),el('strong',item.name),el('small',item.tag));b.addEventListener('click',()=>load(i));$('#examples').append(b);});
-function selectedDish(){const professionalOpen=$('#professional-settings').open,professionalCustom=String(form.elements.customDish.value||'').trim();if(professionalOpen){if(professionalCustom)return professionalCustom;return form.elements.dish.value===CUSTOM_DISH?'':form.elements.dish.value;}const quickCustom=String(form.elements.quickDishCustom.value||'').trim();if(quickCustom)return quickCustom;return form.elements.quickDish.value===CUSTOM_DISH?'':form.elements.quickDish.value;}
- function read(){const x={};for(const [k,v] of Object.entries(C.DEFAULTS)){const node=form.elements[k];x[k]=typeof v==='boolean'?node.checked:decodeField(k,node.value);}const professionalOpen=$('#professional-settings').open,quickEvent=String(form.elements.quickEvent?.value||'').trim(),professionalEvent=String(form.elements.event?.value||'').trim();x.event=professionalOpen&&professionalEvent?professionalEvent:(quickEvent||professionalEvent);const name=selectedDish();x.dish=name;x.customDish=C.DISHES[name]?'':name;return C.normalize(x);}
+ function selectedDish(){const professionalOpen=$('#professional-settings').open,professionalCustom=String(form.elements.customDish.value||'').trim();if(professionalOpen){if(professionalCustom)return professionalCustom;return form.elements.dish.value===CUSTOM_DISH?'':form.elements.dish.value;}const quickCustom=String(form.elements.quickDishCustom.value||'').trim();if(quickCustom)return quickCustom;return form.elements.quickDish.value===CUSTOM_DISH?'':form.elements.quickDish.value;}
+ function newBrandId(){return (globalThis.crypto&&typeof globalThis.crypto.randomUUID==='function')?globalThis.crypto.randomUUID():'brand-'+Date.now()+'-'+Math.random().toString(36).slice(2,8);}
+ function loadBrandProfiles(){try{const raw=localStorage.getItem(BRAND_STORAGE_KEY);if(!raw)return;const data=JSON.parse(raw),list=Array.isArray(data)?data:data?.profiles;if(!Array.isArray(list))return;brandProfiles=list.map(item=>C.normalizeBrandProfile(item)).filter(Boolean).map(item=>({...item,id:item.id||newBrandId()}));}catch{brandProfiles=[];}}
+ function persistBrandProfiles(){try{localStorage.setItem(BRAND_STORAGE_KEY,JSON.stringify({schema:C.BRAND_PROFILE_SCHEMA,version:1,profiles:brandProfiles}));return true;}catch{toast('本机品牌知识库保存失败，请导出后保管 JSON。');return false;}}
+ function brandProfileFromForm(){const name=String(form.elements.brandProfileName?.value||'').trim()||String(form.elements.brand?.value||'').trim();if(!name)return null;return C.normalizeBrandProfile({schema:C.BRAND_PROFILE_SCHEMA,id:activeBrandProfileId||newBrandId(),name,brand:String(form.elements.brand?.value||'').trim(),creativeIdea:String(form.elements.creativeIdea?.value||'').trim(),sceneNotes:String(form.elements.sceneNotes?.value||'').trim(),voice:String(form.elements.brandVoice?.value||'').trim(),visualRules:String(form.elements.brandVisualRules?.value||'').trim(),continuityRules:String(form.elements.brandContinuityRules?.value||'').trim(),updatedAt:new Date().toISOString()});}
+ function setBrandProfileEditor(profile){const p=profile||{};for(const [key,value] of Object.entries({brandProfileName:p.name||'',brandVoice:p.voice||'',brandVisualRules:p.visualRules||'',brandContinuityRules:p.continuityRules||''})){if(form.elements[key])form.elements[key].value=value;}}
+ function renderBrandLibrary(){const select=$('#brand-profile-select');if(!select)return;const keep=activeBrandProfileId;select.replaceChildren(new Option(T('不调用品牌档案'),''));brandProfiles.forEach(profile=>select.append(new Option(profile.name||profile.brand||'未命名品牌',profile.id)));select.value=keep||'';const del=$('#brand-profile-delete');if(del)del.disabled=!keep;}
+ function applyBrandProfile(id){const profile=brandProfiles.find(item=>item.id===id);if(!profile){activeBrandProfileId='';draftBrandProfile=null;setBrandProfileEditor(null);renderBrandLibrary();invalidate('已取消品牌档案调用。');return;}activeBrandProfileId=profile.id;draftBrandProfile=profile;for(const key of ['brand','creativeIdea','sceneNotes'])if(profile[key]!==undefined&&form.elements[key])form.elements[key].value=profile[key]||'';setBrandProfileEditor(profile);renderBrandLibrary();controls();localizeFields();invalidate('已调用品牌档案“'+profile.name+'”，请重新生成。');}
+ function read(){const x={};for(const [k,v] of Object.entries(C.DEFAULTS)){const node=form.elements[k];x[k]=typeof v==='boolean'?node.checked:decodeField(k,node.value);}const professionalOpen=$('#professional-settings').open,quickEvent=String(form.elements.quickEvent?.value||'').trim(),professionalEvent=String(form.elements.event?.value||'').trim();x.event=professionalOpen&&professionalEvent?professionalEvent:(quickEvent||professionalEvent);const name=selectedDish();x.dish=name;x.customDish=C.DISHES[name]?'':name;const profile=brandProfiles.find(item=>item.id===activeBrandProfileId)||draftBrandProfile;if(profile)x.brandProfile=C.normalizeBrandProfile(profile);return C.normalize(x);}
 function decodeField(key,value){const saved=fieldViews.get(key);return saved&&saved.display===value?saved.original:value;}
 const fieldViews=new Map();
 function localizeFields(){for(const key of ['subject','action','camera','style']){const node=form.elements[key],original=decodeField(key,node.value),display=T(original);fieldViews.set(key,{original,display});node.value=display;}}
 function syncQuick(){const name=String(form.elements.dish.value||'').trim(),known=Boolean(C.DISHES[name]);form.elements.dish.value=known?name:CUSTOM_DISH;form.elements.quickDish.value=known?name:CUSTOM_DISH;form.elements.quickDishCustom.value=known?'':name;form.elements.quickScene.value=form.elements.sceneMode.value;}
 function clearPhotoPreview(){if(photoUrl){URL.revokeObjectURL(photoUrl);photoUrl='';}$('#ref-photo-preview').removeAttribute('src');$('#ref-photo-preview').hidden=true;}
- function fill(x){fieldViews.clear();for(const [k,v] of Object.entries(C.DEFAULTS)){const node=form.elements[k];if(typeof v==='boolean')node.checked=x[k];else if(k==='dish')node.value=C.DISHES[x[k]]?x[k]:CUSTOM_DISH;else node.value=x[k];}if(form.elements.quickEvent)form.elements.quickEvent.value=x.event||'';$('#ref-photo-file').value='';clearPhotoPreview();if(!C.DISHES[x.dish])form.elements.customDish.value=x.dish||'';syncQuick();controls();localizeFields();}
+ function fill(x){fieldViews.clear();for(const [k,v] of Object.entries(C.DEFAULTS)){const node=form.elements[k];if(typeof v==='boolean')node.checked=x[k];else if(k==='dish')node.value=C.DISHES[x[k]]?x[k]:CUSTOM_DISH;else node.value=x[k];}if(form.elements.quickEvent)form.elements.quickEvent.value=x.event||'';$('#ref-photo-file').value='';clearPhotoPreview();if(!C.DISHES[x.dish])form.elements.customDish.value=x.dish||'';draftBrandProfile=C.normalizeBrandProfile(x.brandProfile);activeBrandProfileId=draftBrandProfile&&brandProfiles.some(item=>item.id===draftBrandProfile.id)?draftBrandProfile.id:'';setBrandProfileEditor(draftBrandProfile);syncQuick();renderBrandLibrary();controls();localizeFields();}
 function controls(){const n=Number(form.elements.conflict.value);$('#conflict-value').textContent=n+' / '+(language==='en'?['None','Low','Medium','High']:['无','轻','中','强'])[n];const name=selectedDish()||'油泼面';const profile=C.realityProfile(name);$('#reality-label').textContent=T(profile.title);$('#reality-note').textContent=T(profile.note);}
 function setState(s,message,error=false){$('#state').textContent=T(s);$('#notice').textContent=T(message);$('#notice').classList.toggle('error',error);}
 function invalidate(message='输入已修改，请重新生成。'){dirty=true;document.querySelectorAll('.export').forEach(b=>b.disabled=true);SayelfMotion.reset('#result-title, .metrics .metric, #board .shot');$('#results').classList.add('old');setState('待生成',language==='en'?'Inputs changed or example loaded. Generate a plan.':message);}
@@ -769,17 +803,24 @@ function load(i){exampleIndex=i;fill(C.EXAMPLES[i].input);document.querySelector
 function toast(message){$('#toast').textContent=T(message);$('#toast').hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('#toast').hidden=true,3500);}
 function markExample(name){const i=C.EXAMPLES.findIndex(item=>item.name===name);if(i<0)return;exampleIndex=i;document.querySelectorAll('.example').forEach((b,j)=>{b.classList.toggle('active',j===i);b.setAttribute('aria-pressed',String(j===i));});}
 function quickApply(kind){const selected=form.elements.quickDish.value,custom=String(form.elements.quickDishCustom.value||'').trim(),dish=selected===CUSTOM_DISH?custom:selected,scene=form.elements.quickScene.value;if(kind==='dish'&&selected===CUSTOM_DISH&&!dish){invalidate('请输入新的菜品名称，再点击一键生成。');return;}if($('#professional-settings').open){if(kind==='dish'){form.elements.dish.value=C.DISHES[dish]?dish:CUSTOM_DISH;form.elements.customDish.value=C.DISHES[dish]?'':dish;}else form.elements.sceneMode.value=scene;controls();invalidate('已更新高级设置，请生成当前方案。');return;}const preset=C.EXAMPLES.find(item=>item.input.dish===dish)||C.EXAMPLES[0];fill({...preset.input,sceneMode:scene,dish,customDish:C.DISHES[dish]?'':dish});markExample(preset.name);invalidate('已选择「'+dish+'」与「'+scene+'」，点击一键生成。');}
-form.elements.quickDish.addEventListener('change',()=>quickApply('dish'));
-form.elements.quickScene.addEventListener('change',()=>quickApply('scene'));
-form.elements.quickDishCustom.addEventListener('input',()=>{const name=form.elements.quickDishCustom.value.trim();form.elements.quickDish.value=name?CUSTOM_DISH:(C.DISHES[form.elements.dish.value]?form.elements.dish.value:CUSTOM_DISH);form.elements.customDish.value=name;if(name)form.elements.dish.value=CUSTOM_DISH;controls();invalidate();});
-form.elements.customDish.addEventListener('input',()=>{if(form.elements.customDish.value.trim())form.elements.dish.value=CUSTOM_DISH;controls();invalidate();});
-form.addEventListener('input',()=>{controls();invalidate();});form.addEventListener('change',()=>{controls();invalidate();});
+ form.elements.quickDish.addEventListener('change',()=>quickApply('dish'));
+ form.elements.quickScene.addEventListener('change',()=>quickApply('scene'));
+ form.elements.quickDishCustom.addEventListener('input',()=>{const name=form.elements.quickDishCustom.value.trim();form.elements.quickDish.value=name?CUSTOM_DISH:(C.DISHES[form.elements.dish.value]?form.elements.dish.value:CUSTOM_DISH);form.elements.customDish.value=name;if(name)form.elements.dish.value=CUSTOM_DISH;controls();invalidate();});
+ form.elements.customDish.addEventListener('input',()=>{if(form.elements.customDish.value.trim())form.elements.dish.value=CUSTOM_DISH;controls();invalidate();});
+ $('#brand-profile-manage').addEventListener('click',()=>{$('#professional-settings').open=true;$('#brand-profile-editor').open=true;});
+ $('#brand-profile-apply').addEventListener('click',()=>applyBrandProfile($('#brand-profile-select').value));
+ $('#brand-profile-save').addEventListener('click',()=>{const profile=brandProfileFromForm();if(!profile){toast('请先填写品牌档案名称或品牌 / 门店。');$('#professional-settings').open=true;$('#brand-profile-editor').open=true;return;}profile.id=activeBrandProfileId||profile.id;const index=brandProfiles.findIndex(item=>item.id===profile.id);if(index<0)brandProfiles.push(profile);else brandProfiles[index]=profile;activeBrandProfileId=profile.id;draftBrandProfile=profile;persistBrandProfiles();setBrandProfileEditor(profile);renderBrandLibrary();invalidate('品牌档案已保存到本机，请重新生成。');toast('品牌档案已保存。');});
+ $('#brand-profile-delete').addEventListener('click',()=>{if(!activeBrandProfileId){toast('尚未选择品牌档案。');return;}brandProfiles=brandProfiles.filter(item=>item.id!==activeBrandProfileId);persistBrandProfiles();activeBrandProfileId='';draftBrandProfile=null;setBrandProfileEditor(null);renderBrandLibrary();invalidate('品牌档案已从本机移除。');toast('品牌档案已删除。');});
+ $('#brand-profile-export').addEventListener('click',()=>downloadFile(JSON.stringify({schema:C.BRAND_PROFILE_SCHEMA,version:1,profiles:brandProfiles},null,2),'application/json;charset=utf-8','sayelf-brand-knowledge-base.json'));
+ $('#brand-profile-import').addEventListener('click',()=>$('#brand-kb-file').click());
+ $('#brand-kb-file').addEventListener('change',async event=>{const file=event.target.files[0];if(!file)return;try{if(file.size>100000)throw Error('品牌知识库文件过大，限制为 100 KB。');const data=JSON.parse(await file.text()),list=Array.isArray(data)?data:data?.profiles;if(data?.schema!==C.BRAND_PROFILE_SCHEMA||!Array.isArray(list))throw Error('品牌知识库版本或结构不受支持。');const imported=list.map(item=>C.normalizeBrandProfile(item)).filter(Boolean).map(item=>({...item,id:item.id||newBrandId()}));for(const profile of imported){const index=brandProfiles.findIndex(item=>item.id===profile.id||item.name===profile.name);if(index<0)brandProfiles.push(profile);else brandProfiles[index]=profile;}persistBrandProfiles();renderBrandLibrary();toast('品牌知识库已导入 '+imported.length+' 个档案。');}catch(error){toast(error.message||'品牌知识库导入失败。');}finally{event.target.value='';}});
+ form.addEventListener('input',()=>{controls();invalidate();});form.addEventListener('change',()=>{controls();invalidate();});
 function record(status,detail){ledger.push(Object.freeze({run:runNumber,revision,status,detail,time:new Date().toISOString()}));renderLedger();}
 function renderLedger(){const list=$('#run-events');list.replaceChildren();ledger.forEach(e=>list.append(el('li',e.time.slice(11,19)+' · '+e.status+' · '+T('方案版本')+' '+e.revision+' · '+T(e.detail))));$('#restore').disabled=!checkpoint;}
 function displayResult(){current=language==='en'?L.english(C,canonical):canonical;render();}
 form.addEventListener('submit',event=>{event.preventDefault();runNumber++;record('RUNNING','正在生成方案。');setState('生成中','正在生成方案。');try{const r=C.compile(read());if(r.state==='ERROR'){record('BLOCKED',r.errors.join(' '));invalidate();setState('需要修改',r.errors.join(' '),true);return;}const view=language==='en'?L.english(C,r):r;if(view.shots.length!==view.imageFrames.length||view.shots.some((shot,i)=>shot.id!==view.imageFrames[i].id||shot.start!==view.imageFrames[i].start||shot.end!==view.imageFrames[i].end))throw Error('Localized result mismatch');canonical=r;current=view;revision++;checkpoint={canonical:r,revision};dirty=false;record('COMPLETED','结构校验通过；素材与生成质量仍需人工核对。');render();}catch{record('FAILED','未能完成生成。请检查输入，或恢复示范再试。');invalidate();setState('生成失败','未能完成生成。请检查输入，或恢复示范再试。',true);}});
 $('#restore').addEventListener('click',()=>{if(!checkpoint)return;fill(checkpoint.canonical.input);canonical=checkpoint.canonical;dirty=false;record('RESTORED','已恢复上一份有效方案。');displayResult();toast(canonical.input.refPhotoName?'恢复后请重新选择需要预览的照片。':'已恢复上一份有效方案。');});
-$('#language').addEventListener('change',()=>{language=$('#language').value;document.documentElement.lang=language==='en'?'en':'zh-CN';staticNodes.forEach(([n,value])=>{if(n.isConnected){const stripped=value.trim();n.textContent=value.replace(stripped,T(stripped));}});staticAttrs.forEach(([n,a,v])=>n.setAttribute(a,T(v)));document.querySelectorAll('option').forEach(o=>{if(!o.dataset.label){o.dataset.label=o.textContent;o.value=o.value;}o.textContent=T(o.dataset.label);});document.querySelectorAll('.example').forEach((b,i)=>{b.querySelector('strong').textContent=T(C.EXAMPLES[i].name);b.querySelector('small').textContent=T(C.EXAMPLES[i].tag);});document.querySelectorAll('#evidence-fields label').forEach((n,i)=>{n.querySelector('span').textContent=T(Object.values(evidenceNames)[i]);const a=n.querySelector('textarea');a.placeholder=T(a.name==='event'?'例如：某次出餐检查的真实可见过程，以及对应素材编号':'没有真实素材可留空');});localizeFields();controls();renderLedger();if(canonical&&!dirty)displayResult();else invalidate();});
+ $('#language').addEventListener('change',()=>{language=$('#language').value;document.documentElement.lang=language==='en'?'en':'zh-CN';staticNodes.forEach(([n,value])=>{if(n.isConnected){const stripped=value.trim();n.textContent=value.replace(stripped,T(stripped));}});staticAttrs.forEach(([n,a,v])=>n.setAttribute(a,T(v)));document.querySelectorAll('option').forEach(o=>{if(!o.dataset.label){o.dataset.label=o.textContent;o.value=o.value;}o.textContent=T(o.dataset.label);});document.querySelectorAll('.example').forEach((b,i)=>{b.querySelector('strong').textContent=T(C.EXAMPLES[i].name);b.querySelector('small').textContent=T(C.EXAMPLES[i].tag);});document.querySelectorAll('#evidence-fields label').forEach((n,i)=>{n.querySelector('span').textContent=T(Object.values(evidenceNames)[i]);const a=n.querySelector('textarea');a.placeholder=T(a.name==='event'?'例如：某次出餐检查的真实可见过程，以及对应素材编号':'没有真实素材可留空');});renderBrandLibrary();localizeFields();controls();renderLedger();if(canonical&&!dirty)displayResult();else invalidate();});
 
 function renderWorkflow(){
  const box=$('#workflow-view');
@@ -834,14 +875,15 @@ function render(){
 document.querySelectorAll('.tab').forEach(b=>{b.addEventListener('click',()=>tab(b.dataset.tab));b.addEventListener('keydown',e=>{if(!['ArrowRight','ArrowLeft','Home','End'].includes(e.key))return;e.preventDefault();const keys=['board','image','video'];let i=keys.indexOf(activeTab);i=e.key==='Home'?0:e.key==='End'?2:(i+(e.key==='ArrowRight'?1:2))%3;tab(keys[i]);$('#tab-'+keys[i]).focus();});});
 function ensure(){if(!current||dirty){toast('请先按当前输入重新生成。');return false;}return true;}
 function allText(){return current.imagePrompt+'\n\n====================\n\n'+current.videoPrompt+(language==='en'?'\n\nReview notes\n':'\n\n校验与待核实事项\n')+current.warnings.join('\n');}
-function download(text,type,ext){try{const blob=new Blob([text],{type});const url=URL.createObjectURL(blob),a=el('a');a.href=url;a.download='sayelf-food-video-'+current.input.dish+'.'+ext;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);toast('已请求下载，请查看浏览器下载列表。');}catch{toast('浏览器未能下载，请使用复制按钮。');}}
+ function downloadFile(text,type,name){try{const blob=new Blob([text],{type}),url=URL.createObjectURL(blob),a=el('a');a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);return true;}catch{return false;}}
+ function download(text,type,ext){if(downloadFile(text,type,'sayelf-food-video-'+current.input.dish+'.'+ext))toast('已请求下载，请查看浏览器下载列表。');else toast('浏览器未能下载，请使用复制按钮。');}
 async function copyText(text,message='已复制。'){try{if(!navigator.clipboard)throw Error();await navigator.clipboard.writeText(text);toast(message);}catch{const t=el('textarea');t.value=text;document.body.append(t);t.select();let ok=false;try{ok=document.execCommand('copy');}catch{}t.remove();toast(ok?message:'自动复制不可用，请使用 Ctrl+C。');}}
 $('#copy').addEventListener('click',async()=>{if(!ensure())return;const text=activeTab==='image'?current.imagePrompt:activeTab==='video'?current.videoPrompt:current.shots.map(s=>s.start+'-'+s.end+(language==='en'?'s ':'秒 ')+s.label+'：'+s.action+'\n'+s.camera+'；'+s.sound+'；'+s.evidence).join('\n\n');try{if(!navigator.clipboard)throw Error();await navigator.clipboard.writeText(text);toast('已复制。');}catch{const t=el('textarea');t.value=text;document.body.append(t);t.select();let ok=false;try{ok=document.execCommand('copy');}catch{}t.remove();if(ok)toast('已复制。');else{tab(activeTab==='image'?'image':'video');const output=$(activeTab==='image'?'#image-output':'#video-output');output.focus();output.select();toast('自动复制不可用，已选中提示词，请按 Ctrl+C，或下载 TXT。');}}});
 $('#txt').addEventListener('click',()=>{if(ensure())download(allText(),'text/plain;charset=utf-8','txt');});
  $('#json').addEventListener('click',()=>{if(ensure())download(JSON.stringify({schema:current.schema,version:current.version,input:current.input},null,2),'application/json;charset=utf-8','json');});
  $('#ref-photo-file').addEventListener('change',event=>{const files=Array.from(event.target.files||[]);if(!files.length){form.elements.refPhotoName.value='';clearPhotoPreview();invalidate('已清除参照照片。');return;}if(files.some(file=>!file.type.startsWith('image/'))){toast('请选择图片文件。');event.target.value='';return;}form.elements.refPhotoName.value=files.map(file=>file.name).join('、');clearPhotoPreview();photoUrl=URL.createObjectURL(files[0]);$('#ref-photo-preview').src=photoUrl;$('#ref-photo-preview').hidden=false;invalidate('参照照片已在本机载入，请重新生成。');});
 $('#import').addEventListener('click',()=>$('#file').click());$('#header-import').addEventListener('click',()=>$('#file').click());$('#header-json').addEventListener('click',()=>$('#json').click());$('#file').addEventListener('change',async e=>{const file=e.target.files[0];if(!file)return;try{if(file.size>100000)throw Error('配置文件过大，限制为 100 KB。');const x=C.importConfig(await file.text());fill(x);document.querySelectorAll('.example').forEach(b=>{b.classList.remove('active');b.setAttribute('aria-pressed','false');});invalidate('配置已载入，请生成当前方案。');}catch(error){toast(error.message);}finally{e.target.value='';}});
-$('#reset').addEventListener('click',()=>load(exampleIndex));load(0);document.querySelectorAll('option').forEach(o=>{o.dataset.label=o.textContent;o.value=o.value;});
+ $('#reset').addEventListener('click',()=>load(exampleIndex));loadBrandProfiles();renderBrandLibrary();load(0);document.querySelectorAll('option').forEach(o=>{o.dataset.label=o.textContent;o.value=o.value;});
 })();
 </script>
 </body>

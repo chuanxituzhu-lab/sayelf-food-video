@@ -2,7 +2,7 @@
 
 **把一道菜，写成能拍的分镜。**
 
-v1.14.0 · 2026-09-19 · 单文件离线工具 + 独立创作 Skill。
+v1.15.0 · 2026-09-20 · 单文件离线工具 + 独立创作 Skill。
 
 ## 始终下载最新版
 
@@ -20,12 +20,13 @@ v1.14.0 · 2026-09-19 · 单文件离线工具 + 独立创作 Skill。
 
 1. 解压 ZIP，双击 `sayelf-food-video.html`，用桌面浏览器打开。
 2. 普通用户先输入事件/故事线索，再选择菜品和场景，点击“一键生成创作方案”；也可以在菜品框输入新的菜品名称，系统会按事件与工艺决定节点、分镜数量、镜头与节奏。
-3. 需要精细控制时，打开“专业用户：打开高级设置”，可调整事件证据、四要素表达覆盖、菜品或自定义菜名、品牌/门店、创意主题、场景补充、平台、时长、故事性、参考说明和画面比例（自动匹配、9:16、3:4、16:9、4:5）。参照照片可在本机选择并预览，文件不会上传。
-4. 查看分镜、图片 Prompt 和视频 Prompt；普通用户可复制内容或下载 TXT。校验结果、冻结母结构、导入配置与下载配置 JSON 收纳在专业用户折叠区。
+3. 品牌重复使用时，在“品牌知识库”选择档案并点击“调用品牌档案”；第一次使用可在专业设置中保存当前品牌的口吻、视觉规则和连续性规则。档案只保存在本机。
+4. 需要精细控制时，打开“专业用户：打开高级设置”，可调整事件证据、四要素表达覆盖、菜品或自定义菜名、品牌/门店、创意主题、场景补充、平台、时长、故事性、参考说明和画面比例（自动匹配、9:16、3:4、16:9、4:5）。参照照片可在本机选择并预览，文件不会上传。
+5. 查看分镜、图片 Prompt 和视频 Prompt；普通用户可复制内容或下载 TXT。校验结果、冻结母结构、导入配置与下载配置 JSON 收纳在专业用户折叠区。
 
-5. 顶部语言菜单可切换中文 / English。切换只改变界面和内置模板；你填写的品牌、台词、事件和创意保持原文。生成记录默认折叠在结果区，失败输入不会覆盖上一份通过校验的方案，可用“恢复上一份有效方案”继续工作。
+6. 顶部语言菜单可切换中文 / English。切换只改变界面和内置模板；你填写的品牌、台词、事件和创意保持原文。生成记录默认折叠在结果区，失败输入不会覆盖上一份通过校验的方案，可用“恢复上一份有效方案”继续工作。
 
-无需后端、安装包、API key、模型下载或网络连接。所有运算均为浏览器本地确定性规则。JSON 保存输入，TXT 保存双提示词；刷新页面不保留未导出的输入。
+无需后端、安装包、API key、模型下载或网络连接。所有运算均为浏览器本地确定性规则。品牌知识库使用浏览器本机存储，支持显式导入/导出；普通输入仍不自动保存。JSON 保存输入，TXT 保存双提示词。
 
 **功能边界**：此版本生成图片/视频提示词及拍摄方案，不直接生成图片、音乐或 MP4。没有爆款保证。将 Prompt 手动交给目标生成器时，再绑定获授权参考素材并检查该工具的格式、单次时长与费用；本页不会替你发送内容。
 
@@ -91,7 +92,7 @@ v1.14.0 · 2026-09-19 · 单文件离线工具 + 独立创作 Skill。
 
 ## 数据与安全
 
-HTML 无外链资源、遥测、上传、自动保存或联网 API，且用内容安全策略关闭网络连接。输入只留在内存；导入文件按 JSON 读取，不执行代码；输出用纯文本呈现。100 KB 为导入上限，所有文本字段上限 2000 字。
+HTML 无外链资源、遥测、上传或联网 API，且用内容安全策略关闭网络连接。普通输入只留在内存；品牌知识库仅写入当前浏览器的本机存储，并可随时导出或删除；导入文件按 JSON 读取，不执行代码；输出用纯文本呈现。100 KB 为导入上限，所有文本字段上限 2000 字。
 
 导出的 JSON/TXT 可能包含用户填写的经营信息，请保管在本地。复制按钮只在点击时写入系统剪贴板；若系统启用了剪贴板同步，行为由操作系统管理，本页不主动上传。不要填写凭据或无关隐私资料。
 
@@ -99,11 +100,11 @@ HTML 无外链资源、遥测、上传、自动保存或联网 API，且用内�
 
 ## 模块与扩展
 
-单 HTML 内按边界组织：`SayelfFood` Core → 菜品 `DISHES` / 平台 `PLATFORMS` 数据 → 图片/视频文本编译 → UI / 本地导入导出。Core 不访问 DOM、存储或网络，可从 HTML 第一段 script 单独提取运行。真人秀、ASMR、配乐等开关可关闭；没有必须安装的第三方插件。
+单 HTML 内按边界组织：`SayelfFood` Core → 菜品 `DISHES` / 平台 `PLATFORMS` 数据 → 图片/视频文本编译 → UI / 本地导入导出 → 品牌知识库适配层。Core 不访问 DOM、存储或网络；品牌库只由 UI 适配层写入本机存储，可从 HTML 第一段 script 单独提取 Core 运行。真人秀、ASMR、配乐等开关可关闭；没有必须安装的第三方插件。
 
 GSAP Motion Layer 是 UI 的共享能力，不是新的 Skill，也不进入 Core。页面暴露 `globalThis.SayelfMotion`（`reveal(targets, options)`、`reset(targets)`、`engine`、`available`、`prefersReducedMotion`）；宿主已经注入 `globalThis.gsap` 时直接复用其 `fromTo/to/context` 能力，独立 HTML 不加载 CDN 或外部脚本，未注入时使用同一入口的原生降级，用户开启减少动效时自动停用。后续 Skill 只调用这层，不重复设计动效底座。
 
-配置格式为 `sayelf-food-video/v1`（输出 schema 为 `sayelf-food-video/v1.5`），输出 API 为 `SayelfFood.compile(input)`；成功包含 `shots,imageFrames,imagePrompt,videoPrompt,warnings,meta`，结构错误返回 `state: ERROR` 与 `errors`。`workflowMode` 默认 `dynamic`，`meta.eventFirst`、`meta.eventSupplied`、`meta.shotCountSource` 和 `meta.shotCountReason` 记录事件是否先决定节点；`meta.workflow` 记录本次内容触发的角色、依赖和判断信号，`meta.brief/derivedFields` 记录可选表达覆盖，`meta.productionCard` 记录料理卡与连续性锚点，每镜包含 `movement/edit/sfx/vfx`。内容需人工核对时状态为 `NEEDS_REVIEW`。JSON 下载只存输入与版本，避免把旧结果误当新结果；导入后重新生成。普通模式默认隐藏四要素、校验、母结构和配置工具，专业用户展开后才显示。
+配置格式为 `sayelf-food-video/v1`（输出 schema 为 `sayelf-food-video/v1.5`），输出 API 为 `SayelfFood.compile(input)`；成功包含 `shots,imageFrames,imagePrompt,videoPrompt,warnings,meta`，结构错误返回 `state: ERROR` 与 `errors`。`workflowMode` 默认 `dynamic`，`meta.eventFirst`、`meta.eventSupplied`、`meta.shotCountSource` 和 `meta.shotCountReason` 记录事件是否先决定节点；`meta.workflow` 记录本次内容触发的角色、依赖和判断信号，`meta.brief/derivedFields` 记录可选表达覆盖，`meta.productionCard` 记录料理卡与连续性锚点，每镜包含 `movement/edit/sfx/vfx`；调用品牌档案时，`input.brandProfile` 和 `meta.brandProfile` 记录本次使用的品牌上下文。内容需人工核对时状态为 `NEEDS_REVIEW`。JSON 下载只存输入与版本，避免把旧结果误当新结果；品牌库另用 `sayelf-food-video/brand-kb/v1` 管理。导入后重新生成。普通模式默认隐藏四要素、校验、母结构和配置工具，专业用户展开后才显示。
 
 中英文界面使用 HTML 内嵌的本地语言资源，不加载翻译服务；Core 先生成唯一的镜头编号、时间轴和工艺节点，语言适配器只翻译展示层和内置建议，图片关键帧与视频分镜仍共享同一组 `id/start/end`。生成记录是本次页面会话内存，不写入浏览器存储，关闭页面即清除。
 
@@ -126,13 +127,14 @@ GSAP Motion Layer 是 UI 的共享能力，不是新的 Skill，也不进入 Cor
 | [OpenCanvas](https://github.com/robinrheem/opencanvas) | 连续性状态记忆与 QA 选择；本产品用轻量锚点和验证器吸收 |
 | [Seedance shot-list continuity](https://github.com/Emily2040/seedance-2.0/blob/main/references/shot-list-continuity.md) | `@Image`/`@Audio` 参考、接入/交出状态、失败后拆分动作 |
 | [FDE Guide](https://github.com/davidahmann/fde-guide/blob/main/library/00-start-here.md) | 现场观察、价值基线、最小工作流、验收证据、失败/回滚与交付责任 | 将现有状态、校验、运行记录和检查点收敛为专业区 FDE 现场交付卡 | 不引入客户后台、远程数据、外部部署平台 |
+| [promptforge-v2](https://github.com/OnDemandWorld/promptforge-v2) / [Cabinet](https://github.com/cabinetai/cabinet) | 本地可移植资料库、版本化存储、显式导入/导出 | 用轻量品牌档案和本机存储实现按需调用 | 不引入云端向量库、账号体系或隐式同步 |
 | [GSAP `to()`](https://gsap.com/docs/v3/GSAP/gsap.to%28%29/) / [Timeline `fromTo()`](https://gsap.com/docs/v3/GSAP/Timeline/fromTo%28%29/) / [`context()`](https://gsap-docs.netlify.app/docs/v3/gsap/gsap.context%28%29/) | 共享补间、时间线和可清理上下文；本产品蒸馏为单一 Motion Layer 入口，不绑定 CDN |
 
 只观察公开 README 并蒸馏机制；未复制实现、模板或媒体，未运行上述工具。完整差距分析和已知限制见 `BUILD-DECISION.md`。本包不含其代码或依赖；未来使用其实现时另查适用许可证。sayelf 与上述项目及 Seedance 无官方关联声明。
 
 ## 维护、验证与回滚
 
-本版为 1.14.0，规则变更须先用十一示范（含六道川菜）、事件先行输入、事件细节改变分镜数量、四要素隐藏与专业覆盖、动态角色分工、手动四要素校验、料理卡、逐镜剪辑/声音/视觉字段、负面约束、动态真人秀定位、品牌/创意/照片输入、分镜 Prompt 折叠与单镜复制、约 2 秒软参考且实际时长可变、时长边界、画面比例、不同运镜、自然转场、电影化节奏、中英文切换、生成记录恢复、GSAP Motion Layer 共享入口与原生降级、FDE 现场交付卡、最新版下载链接与普通/专业两条路径验证，再单示范试用后推广。保留旧 HTML、Skill 和导出配置，可通过替换文件回滚；没有自动升级或跨版本迁移。不同 schema 明确拒绝导入，避免静默破坏旧数据。
+本版为 1.15.0，规则变更须先用十一示范（含六道川菜）、事件先行输入、事件细节改变分镜数量、四要素隐藏与专业覆盖、动态角色分工、手动四要素校验、料理卡、逐镜剪辑/声音/视觉字段、负面约束、动态真人秀定位、品牌/创意/照片输入、品牌知识库保存/调用/导入/导出、分镜 Prompt 折叠与单镜复制、约 2 秒软参考且实际时长可变、时长边界、画面比例、不同运镜、自然转场、电影化节奏、中英文切换、生成记录恢复、GSAP Motion Layer 共享入口与原生降级、FDE 现场交付卡、最新版下载链接与普通/专业两条路径验证，再单示范试用后推广。保留旧 HTML、Skill 和导出配置，可通过替换文件回滚；没有自动升级或跨版本迁移。不同 schema 明确拒绝导入，避免静默破坏旧数据。
 
 测试结论与未测浏览器见 `VALIDATION.md`。提示词结构正确不代表生成画面、真实经营效果或传播效果已经验证。
 
@@ -141,6 +143,8 @@ GSAP Motion Layer 是 UI 的共享能力，不是新的 Skill，也不进入 Cor
 以后每次功能或规则更新都递增版本号，并同步更新 HTML、SKILL、README、验证记录和 ZIP 商品包。README 顶部保留当前版本号与日期；本节只记录每一版的重点变化，便于用户快速判断是否需要替换文件。版本号采用 `主版本.次版本.修订号`：新增功能递增次版本，兼容性或文字修正递增修订号；若配置结构不兼容，必须在 README 和验证记录中明确说明。
 
 ### 版本重点
+
+- **v1.15.0 · 2026-09-20**：增加本机品牌知识库；可保存品牌口吻、视觉规则、连续性规则和创意上下文，普通用户下次直接选择调用，专业用户可维护、删除、导入和导出；品牌资料不上传、不进入公开仓库。
 
 - **v1.14.0 · 2026-09-19**：将普通镜头节奏参考调整为约 2 秒，但不固定分镜长度；事件/工艺节点继续先决定分镜数量，按动作完成度和关键节点加权分配实际时长，并新增 `meta.timingReference='soft'` 与回归断言证明时长存在故事驱动差异。
 
